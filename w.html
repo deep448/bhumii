@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Surprise</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
+      overflow: hidden;
+    }
+
+    .page {
+      display: none;
+      height: 100%; width: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .active { display: flex; }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .start-btn {
+      background: #ff4081;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 22px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: background 0.3s ease;
+    }
+    .start-btn:hover { background: #e91e63; }
+
+    h1 {
+      font-size: 50px;
+      color: #fff;
+      text-shadow: 2px 2px 6px #000;
+      margin: 0;
+    }
+
+    .cake {
+      width: 220px;
+      cursor: pointer;
+      margin-top: 40px;
+      animation: bounce 2s infinite;
+      border-radius: 15px;
+      box-shadow: 0 0 15px 5px #ff4081;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .candle-flame {
+      position: absolute;
+      width: 12px; height: 20px;
+      background: radial-gradient(circle at center, #ffec99 0%, #ffb347 70%, transparent 90%);
+      border-radius: 50%;
+      top: 10px;
+      animation: flicker 1.5s infinite alternate;
+      filter: drop-shadow(0 0 2px #ffb347);
+    }
+    @keyframes flicker {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.7; transform: scale(1.1); }
+    }
+    .candle1 { left: 60px; }
+    .candle2 { left: 105px; }
+    .candle3 { left: 150px; }
+
+    .slideshow {
+      position: relative;
+      width: 350px;
+      height: 350px;
+      margin-bottom: 20px;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.5);
+      border: 5px solid rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.1);
+    }
+    .slideshow img {
+      position: absolute;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out, transform 6s ease-in-out;
+      border-radius: 25px;
+    }
+    .slideshow img.active {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .message {
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      color: #fff;
+      text-shadow: 2px 2px 5px #000;
+      max-width: 650px;
+      line-height: 1.6;
+      animation: fadeIn 3s ease forwards;
+      margin-top: 20px;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 50px; height: 70px;
+      background-color: red;
+      border-radius: 50%;
+      animation: rise 10s linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(-120vh) rotate(360deg); }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px; height: 20px;
+      background-color: #ffeb3b;
+      animation: fall 3s linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 0.2; transform: scale(1.5); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio -->
+  <audio id="birthdayAudio" src="birthday.mp3" loop></audio>
+
+  <!-- Page 1 -->
+  <div class="page active" id="page1">
+    <button class="start-btn" onclick="goToPage(2)">Click to Open Surprise 🎁</button>
+  </div>
+
+  <!-- Page 2 -->
+  <div class="page" id="page2">
+    <h1>Happy Birthday Bhumiii💖🎉</h1>
+    <img src="https://img.freepik.com/free-vector/birthday-cake-sweet-cream-pie-with-candles-illustration_1284-52975.jpg"
+         class="cake" alt="Birthday Cake"
+         onclick="blowOutCandles()" />
+    <div class="candle-flame candle1"></div>
+    <div class="candle-flame candle2"></div>
+    <div class="candle-flame candle3"></div>
+  </div>
+
+  <!-- Page 3 -->
+  <div class="page" id="page3">
+    <h1>Happy Birthday Bhumiii💖🎉</h1>
+    <div class="slideshow" id="slideshow">
+      <img src="Photo1.jpg" class="active" alt="Photo 1" />
+    </div>
+    <div class="message" id="typed-message"></div>
+  </div>
+
+  <script>
+    function goToPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + page).classList.add('active');
+
+      if (page === 2) {
+        const song = document.getElementById('birthdayAudio');
+        song.play().catch(() => console.log("User interaction needed to play audio"));
+
+        releaseBalloons();
+        releaseConfetti();
+      }
+      if (page === 3) {
+        startTyping();
+        createSparkles();
+      }
+    }
+
+    const messageText = `My every day begins with you — with your smile, our talks, and the little moments that turn ordinary days into something magical.
+
+Even though you joined college a year after me, every laugh, every memory we built together is stored in my heart as my favourite.
+
+You’re not only the one I love — you’re the one I trust with my whole world. I come to you with everything, big or small, and you always listen, understand, and hold me safe.
+
+On your birthday, I just want you to know I fall for you more, every single day. Happy Birthday, my love. 💖✨`;
+    let typingIndex = 0;
+    function startTyping() {
+      const box = document.getElementById('typed-message');
+      box.textContent = '';
+      const typing = setInterval(() => {
+        if (typingIndex < messageText.length) {
+          box.textContent += messageText.charAt(typingIndex);
+          typingIndex++;
+        } else clearInterval(typing);
+      }, 40);
+    }
+
+    function blowOutCandles() {
+      document.querySelectorAll('.candle-flame').forEach(f => f.style.opacity = 0);
+      setTimeout(() => goToPage(3), 1500);
+    }
+
+    function releaseBalloons() {
+      for (let i = 0; i < 15; i++) {
+        let balloon = document.createElement("div");
+        balloon.className = "balloon";
+        balloon.style.left = Math.random() * 90 + "vw";
+        balloon.style.backgroundColor = `hsl(${Math.random()*360},70%,60%)`;
+        balloon.style.animationDuration = (6 + Math.random() * 5) + "s";
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 10000);
+      }
+    }
+
+    function releaseConfetti() {
+      for (let i = 0; i < 50; i++) {
+        let conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.top = "-20px";
+        conf.style.backgroundColor = `hsl(${Math.random()*360},80%,60%)`;
+        conf.style.animationDuration = (2 + Math.random()*2) + "s";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 3000);
+      }
+    }
+
+    function createSparkles() {
+      setInterval(() => {
+        let sp = document.createElement("div");
+        sp.className = "sparkle";
+        sp.style.left = Math.random() * 100 + "vw";
+        sp.style.top = Math.random() * 100 + "vh";
+        sp.style.animationDuration = (1+Math.random()*2)+"s";
+        document.body.appendChild(sp);
+        setTimeout(() => sp.remove(), 3000);
+      }, 200);
+    }
+  </script>
+</body>
+</html>
