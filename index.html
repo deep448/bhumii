@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +12,11 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
 }
 
 body{
@@ -34,6 +40,7 @@ body{
     inset:0;
     overflow:hidden;
     pointer-events:none;
+    z-index:1;
 }
 
 .heart{
@@ -49,7 +56,11 @@ body{
         transform:translateY(0) rotate(0);
         opacity:0;
     }
-    15%{opacity:.8;}
+
+    15%{
+        opacity:.8;
+    }
+
     100%{
         transform:translateY(-110vh) rotate(360deg);
         opacity:0;
@@ -60,15 +71,25 @@ body{
 .screen{
     position:fixed;
     inset:0;
+    width:100%;
+    min-height:100dvh;
+
     display:flex;
     justify-content:center;
     align-items:center;
     text-align:center;
+
     padding:25px;
 
     opacity:1;
     transform:scale(1);
+
     transition:1s ease;
+
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    z-index:5;
 }
 
 .screen.hide{
@@ -81,41 +102,56 @@ body{
     position:relative;
     z-index:5;
     width:100%;
-    max-width:900px;
+    max-width:1000px;
+    margin:auto;
 }
 
 /* GIFT */
 .gift{
-    font-size:120px;
+    font-size:clamp(85px,12vw,130px);
     cursor:pointer;
     animation:bounce 1.5s infinite;
     filter:drop-shadow(0 0 30px #ff4fa3);
+    user-select:none;
 }
 
 @keyframes bounce{
     0%,100%{
         transform:translateY(0);
     }
+
     50%{
         transform:translateY(-20px) rotate(-3deg);
     }
 }
 
 .small-title{
-    font-size:28px;
+    font-size:clamp(20px,3vw,28px);
     margin:20px 0;
+    line-height:1.4;
 }
 
 button{
     border:none;
     padding:14px 30px;
     border-radius:30px;
+
     background:linear-gradient(45deg,#ff3d91,#ff78ba);
+
     color:white;
     font-size:16px;
     font-weight:bold;
+
     cursor:pointer;
+
     box-shadow:0 0 25px rgba(255,80,170,.6);
+
+    transition:.25s ease;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 35px rgba(255,80,170,.9);
 }
 
 button:active{
@@ -124,9 +160,11 @@ button:active{
 
 /* BIRTHDAY */
 .big-title{
-    font-size:clamp(55px,12vw,120px);
+    font-size:clamp(50px,11vw,120px);
     line-height:.95;
+
     color:#ffd2e9;
+
     text-shadow:
         0 0 10px #ff4b9d,
         0 0 35px #ff4b9d,
@@ -139,6 +177,7 @@ button:active{
     from{
         text-shadow:0 0 15px #ff4b9d;
     }
+
     to{
         text-shadow:
         0 0 20px #ff4b9d,
@@ -154,9 +193,11 @@ button:active{
 
 .intro{
     font-family:Arial,sans-serif;
-    font-size:18px;
+    font-size:clamp(15px,2vw,18px);
     line-height:1.7;
+
     color:#ffe3ef;
+
     max-width:650px;
     margin:auto;
 }
@@ -166,22 +207,30 @@ button:active{
     display:flex;
     justify-content:center;
     align-items:center;
+
     gap:18px;
     flex-wrap:wrap;
+
     margin-bottom:25px;
 }
 
 .photo{
     width:190px;
     height:240px;
+
     padding:5px;
+
     background:#fff;
+
     border-radius:18px;
+
     box-shadow:
         0 10px 30px rgba(0,0,0,.5),
         0 0 25px rgba(255,100,180,.35);
 
     animation:photoIn 1.2s ease both;
+
+    flex-shrink:0;
 }
 
 .photo:nth-child(2){
@@ -197,8 +246,12 @@ button:active{
 .photo img{
     width:100%;
     height:100%;
+
     object-fit:cover;
+
     border-radius:14px;
+
+    display:block;
 }
 
 @keyframes photoIn{
@@ -206,6 +259,7 @@ button:active{
         opacity:0;
         transform:scale(.5) rotate(-10deg);
     }
+
     to{
         opacity:1;
     }
@@ -214,10 +268,14 @@ button:active{
 /* MESSAGE */
 .message{
     font-family:Arial,sans-serif;
+
     font-size:17px;
     line-height:1.8;
+
     color:#ffe5f0;
+
     max-width:750px;
+
     margin:0 auto 20px;
 }
 
@@ -230,43 +288,152 @@ button:active{
 /* MUSIC BUTTON */
 .music{
     position:fixed;
+
     top:20px;
     right:20px;
+
     z-index:20;
+
     width:48px;
     height:48px;
+
     padding:0;
+
     border-radius:50%;
+
     font-size:20px;
+}
+
+/* DESKTOP / WINDOWS */
+@media(min-width:1000px){
+
+    .screen{
+        padding:40px;
+    }
+
+    .content{
+        max-width:1100px;
+    }
+
+    .photo{
+        width:210px;
+        height:270px;
+    }
+
+    .message{
+        font-size:18px;
+    }
+}
+
+/* TABLET */
+@media(max-width:900px){
+
+    .photo{
+        width:160px;
+        height:210px;
+    }
+
+    .photos{
+        gap:12px;
+    }
 }
 
 /* MOBILE */
 @media(max-width:600px){
 
+    .screen{
+        padding:20px 15px;
+    }
+
     .gift{
-        font-size:95px;
+        font-size:90px;
     }
 
     .small-title{
-        font-size:22px;
+        font-size:21px;
+        margin:15px 0 20px;
     }
 
-    .photo{
-        width:105px;
-        height:140px;
+    button{
+        padding:13px 23px;
+        font-size:14px;
     }
 
-    .photos{
-        gap:8px;
+    .big-title{
+        font-size:52px;
     }
 
-    .message{
+    .name{
+        font-size:32px;
+        margin:20px 0;
+    }
+
+    .intro{
         font-size:15px;
         line-height:1.6;
     }
 
-    .intro{
-        font-size:16px;
+    .photos{
+        gap:7px;
+        margin-bottom:18px;
+    }
+
+    .photo{
+        width:29vw;
+        max-width:115px;
+        height:145px;
+        padding:4px;
+        border-radius:13px;
+    }
+
+    .photo img{
+        border-radius:10px;
+    }
+
+    .message{
+        font-size:14px;
+        line-height:1.55;
+        max-width:95%;
+    }
+
+    .signature{
+        font-size:20px;
+        margin:15px;
+    }
+
+    .music{
+        top:12px;
+        right:12px;
+
+        width:42px;
+        height:42px;
+
+        font-size:18px;
+    }
+}
+
+/* VERY SMALL PHONES */
+@media(max-width:380px){
+
+    .gift{
+        font-size:75px;
+    }
+
+    .big-title{
+        font-size:44px;
+    }
+
+    .name{
+        font-size:28px;
+    }
+
+    .photo{
+        width:28vw;
+        height:125px;
+    }
+
+    .message{
+        font-size:13px;
     }
 }
 </style>
@@ -278,12 +445,18 @@ button:active{
 
 <div class="hearts" id="hearts"></div>
 
+
 <!-- MUSIC -->
-<audio id="music" loop>
-    <source src="birthday.mp3" type="audio/mpeg">
+
+<audio id="music" loop preload="auto">
+    <source src="audio-birthday.mp3" type="audio/mpeg">
 </audio>
 
-<button class="music" onclick="toggleMusic()" id="musicBtn">
+<button
+    class="music"
+    onclick="toggleMusic()"
+    id="musicBtn"
+    aria-label="Toggle music">
     🔇
 </button>
 
@@ -326,7 +499,6 @@ button:active{
             BIRTHDAY
         </div>
 
-        <!-- CHANGE NAME HERE -->
         <div class="name">
             Bhumiii ❤️
         </div>
@@ -355,17 +527,16 @@ button:active{
 
         <div class="photos">
 
-            <!-- CHANGE THESE PHOTOS -->
             <div class="photo">
-                <img src="Photo1.jpg">
+                <img src="Photo1.jpg" alt="Memory 1">
             </div>
 
             <div class="photo">
-                <img src="Photo2.jpg">
+                <img src="Photo2.jpg" alt="Memory 2">
             </div>
 
             <div class="photo">
-                <img src="Photo3.jpg">
+                <img src="Photo3.jpg" alt="Memory 3">
             </div>
 
         </div>
@@ -384,6 +555,7 @@ button:active{
             but I just want you to know that you are a really special
             person to me. Some people simply become a beautiful part
             of our memories, and you're one of those people. 🥺❤️
+
             <br><br>
 
             I hope this new year of your life brings you
@@ -391,13 +563,16 @@ button:active{
             to smile. May you get everything you've been wishing for
             and may every difficult day be replaced with something
             beautiful.
+
             <br><br>
 
             Keep smiling, keep shining and always stay the amazing
             person you are. ✨❤️
+
             <br><br>
 
             Once again...
+
             <br>
 
             <b>HAPPY BIRTHDAY! 🎂🎉❤️</b>
@@ -420,31 +595,41 @@ button:active{
 
 <script>
 
-/* CREATE HEARTS */
+/* CREATE FLOATING HEARTS */
 
 const hearts = document.getElementById("hearts");
 
-const heartSymbols = ["❤️","💗","💕","💖","✨","🌸"];
+const heartSymbols = [
+    "❤️",
+    "💗",
+    "💕",
+    "💖",
+    "✨",
+    "🌸"
+];
 
-for(let i=0;i<45;i++){
+for(let i = 0; i < 45; i++){
 
     const heart = document.createElement("div");
 
     heart.className = "heart";
 
     heart.innerHTML =
-        heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+        heartSymbols[
+            Math.floor(Math.random() * heartSymbols.length)
+        ];
 
-    heart.style.left = Math.random()*100 + "%";
+    heart.style.left =
+        Math.random() * 100 + "%";
 
     heart.style.fontSize =
-        (12 + Math.random()*20) + "px";
+        (12 + Math.random() * 20) + "px";
 
     heart.style.animationDuration =
-        (5 + Math.random()*6) + "s";
+        (5 + Math.random() * 6) + "s";
 
     heart.style.animationDelay =
-        Math.random()*7 + "s";
+        Math.random() * 7 + "s";
 
     hearts.appendChild(heart);
 }
@@ -454,18 +639,19 @@ for(let i=0;i<45;i++){
 
 function openGift(){
 
-    document.getElementById("screen1")
+    document
+        .getElementById("screen1")
         .classList.add("hide");
 
     setTimeout(function(){
 
-        document.getElementById("screen2")
+        document
+            .getElementById("screen2")
             .classList.remove("hide");
 
     },600);
 
     playMusic();
-
 }
 
 
@@ -473,12 +659,14 @@ function openGift(){
 
 function showPhotos(){
 
-    document.getElementById("screen2")
+    document
+        .getElementById("screen2")
         .classList.add("hide");
 
     setTimeout(function(){
 
-        document.getElementById("screen3")
+        document
+            .getElementById("screen3")
             .classList.remove("hide");
 
     },600);
@@ -488,34 +676,46 @@ function showPhotos(){
 
 /* MUSIC */
 
-const music = document.getElementById("music");
-const musicBtn = document.getElementById("musicBtn");
+const music =
+    document.getElementById("music");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
 
 function playMusic(){
 
     music.play()
-    .then(()=>{
-        musicBtn.innerHTML="🔊";
+    .then(() => {
+
+        musicBtn.innerHTML = "🔊";
+
     })
-    .catch(()=>{
-        musicBtn.innerHTML="🔇";
+    .catch(() => {
+
+        musicBtn.innerHTML = "🔇";
+
     });
 
 }
+
 
 function toggleMusic(){
 
     if(music.paused){
 
-        music.play();
+        music.play()
+        .then(() => {
 
-        musicBtn.innerHTML="🔊";
+            musicBtn.innerHTML = "🔊";
+
+        });
 
     }else{
 
         music.pause();
 
-        musicBtn.innerHTML="🔇";
+        musicBtn.innerHTML = "🔇";
 
     }
 
@@ -525,3 +725,4 @@ function toggleMusic(){
 
 </body>
 </html>
+```
