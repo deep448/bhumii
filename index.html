@@ -1,2680 +1,527 @@
-PROGRAM CODE
-
-LoginType .aspx
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LoginType.aspx.cs" Inherits="emp_mng_system.LoginType" %>
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Admin Login</title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-        }
+<title>Happy Birthday ❤️</title>
 
-        .header-panel {
-            width: 100%;
-            background-color: #0066FF;
-            text-align: center;
-            padding: 20px;
-            color: white;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .header-panel h2 {
-            margin-top: 10px;
-        }
+body{
+    overflow:hidden;
+    font-family:Georgia,serif;
+    background:#09030d;
+    color:white;
+}
 
-        .main-section {
-            background-image: url('/Scripts/image/bg.jpg'); /* Fixed image path */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: calc(100vh - 130px); /* Adjusted height based on header */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* BACKGROUND */
+.background{
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at 50% 35%,#8d286d 0%,#3a102f 35%,#100611 75%);
+}
 
-        .content-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            width: 100%;
-            max-width: 500px;
-            padding: 30px 20px;
-        }
+/* FLOATING HEARTS */
+.hearts{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
 
-        .login-panel {
-            background-color: white;
-            width: 100%;
-            padding: 30px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
+.heart{
+    position:absolute;
+    bottom:-50px;
+    animation:float 7s linear infinite;
+    opacity:.7;
+    font-size:20px;
+}
 
-        .login-panel h3 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-panel input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background-color: #CCCCFF;
-            border: 1px solid gray;
-            border-radius: 5px;
-        }
-
-        .login-panel button,
-        .login-panel input[type="submit"],
-        .login-panel .asp-button {
-            width: 100%;
-            padding: 10px;
-            background-color: #0066FF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .signup-button {
-            background-color: #6699FF !important;
-        }
-
-        .forgot-password {
-            display: block;
-            margin-top: 10px;
-        }
-
-        @media screen and (max-width: 500px) {
-            .login-panel {
-                padding: 20px;
-            }
-
-            .header-panel h2 {
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <asp:ScriptManager runat="server" />
-
-        <!-- Header -->
-        <asp:Panel ID="Panel1" runat="server" CssClass="header-panel">
-            <asp:Image ID="Image1" runat="server" Height="90px" ImageUrl="~/Scripts/image/logo3.png" Width="137px" />
-        </asp:Panel>
-
-        <!-- Main Section to hold login box -->
-        <div class="main-section">
-            <div class="content-wrapper">
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <asp:Panel ID="Panel2" runat="server" CssClass="login-panel">
-                            <h3>Login Type</h3>
-                            <asp:Button ID="btnAdmin" runat="server" Text="Admin Login" CssClass="asp-button" OnClick="btnAdmin_Click" />
-                            <asp:Button ID="btnEmp" runat="server" Text="Employee Login" CssClass="asp-button signup-button" OnClick="btnEmp_Click" />
-                        </asp:Panel>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-        </div>
-    </form>
-</body>
-</html>
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace emp_mng_system
-{
-    public partial class LoginType : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnAdmin_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("AdminLogin.aspx");
-        }
-
-        protected void btnEmp_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("EmployeeLogin.aspx");
-        }
+@keyframes float{
+    0%{
+        transform:translateY(0) rotate(0);
+        opacity:0;
+    }
+    15%{opacity:.8;}
+    100%{
+        transform:translateY(-110vh) rotate(360deg);
+        opacity:0;
     }
 }
 
-AdminLogin.aspx
+/* SCREEN */
+.screen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:25px;
 
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminLogin.aspx.cs" Inherits="emp_mg_system.AdminLogin" %>
+    opacity:1;
+    transform:scale(1);
+    transition:1s ease;
+}
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Admin Login</title>
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+.screen.hide{
+    opacity:0;
+    pointer-events:none;
+    transform:scale(1.12);
+}
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            background-image: url('/Scripts/image/bg.jpg'); /* ✅ Background Image Fixed */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+.content{
+    position:relative;
+    z-index:5;
+    width:100%;
+    max-width:900px;
+}
 
-        .header-panel {
-            width: 100%;
-            background-color: #0066FF;
-            text-align: center;
-            padding: 20px;
-            color: white;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-        }
+/* GIFT */
+.gift{
+    font-size:120px;
+    cursor:pointer;
+    animation:bounce 1.5s infinite;
+    filter:drop-shadow(0 0 30px #ff4fa3);
+}
 
-        .content-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 30px;
-        }
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-20px) rotate(-3deg);
+    }
+}
 
-        .login-panel {
-            background-color: white;
-            max-width: 400px;
-            padding: 30px;
-            border-style: ridge;
-            box-shadow: 0px 0px 10px gray;
-            text-align: center;
-        }
+.small-title{
+    font-size:28px;
+    margin:20px 0;
+}
 
-        .login-panel input {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-            background-color: #CCCCFF;
-            border: 1px solid gray;
-            border-radius: 5px;
-        }
+button{
+    border:none;
+    padding:14px 30px;
+    border-radius:30px;
+    background:linear-gradient(45deg,#ff3d91,#ff78ba);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 25px rgba(255,80,170,.6);
+}
 
-        .login-panel button {
-            width: 100%;
-            padding: 10px;
-            background-color: #0066FF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
+button:active{
+    transform:scale(.95);
+}
 
-        .signup-button {
-            background-color: #6699FF !important;
-        }
+/* BIRTHDAY */
+.big-title{
+    font-size:clamp(55px,12vw,120px);
+    line-height:.95;
+    color:#ffd2e9;
+    text-shadow:
+        0 0 10px #ff4b9d,
+        0 0 35px #ff4b9d,
+        0 0 70px #ff4b9d;
 
-        .forgot-password {
-            display: block;
-            margin-top: 10px;
-        }
-    </style>
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{
+        text-shadow:0 0 15px #ff4b9d;
+    }
+    to{
+        text-shadow:
+        0 0 20px #ff4b9d,
+        0 0 60px #ff4b9d;
+    }
+}
+
+.name{
+    font-size:clamp(28px,6vw,55px);
+    margin:25px 0;
+    color:#fff;
+}
+
+.intro{
+    font-family:Arial,sans-serif;
+    font-size:18px;
+    line-height:1.7;
+    color:#ffe3ef;
+    max-width:650px;
+    margin:auto;
+}
+
+/* PHOTOS */
+.photos{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.photo{
+    width:190px;
+    height:240px;
+    padding:5px;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.5),
+        0 0 25px rgba(255,100,180,.35);
+
+    animation:photoIn 1.2s ease both;
+}
+
+.photo:nth-child(2){
+    transform:translateY(-15px) rotate(2deg);
+    animation-delay:.2s;
+}
+
+.photo:nth-child(3){
+    transform:rotate(-2deg);
+    animation-delay:.4s;
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:14px;
+}
+
+@keyframes photoIn{
+    from{
+        opacity:0;
+        transform:scale(.5) rotate(-10deg);
+    }
+    to{
+        opacity:1;
+    }
+}
+
+/* MESSAGE */
+.message{
+    font-family:Arial,sans-serif;
+    font-size:17px;
+    line-height:1.8;
+    color:#ffe5f0;
+    max-width:750px;
+    margin:0 auto 20px;
+}
+
+.signature{
+    font-size:24px;
+    color:#ffb9d9;
+    margin:20px;
+}
+
+/* MUSIC BUTTON */
+.music{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:20;
+    width:48px;
+    height:48px;
+    padding:0;
+    border-radius:50%;
+    font-size:20px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    .gift{
+        font-size:95px;
+    }
+
+    .small-title{
+        font-size:22px;
+    }
+
+    .photo{
+        width:105px;
+        height:140px;
+    }
+
+    .photos{
+        gap:8px;
+    }
+
+    .message{
+        font-size:15px;
+        line-height:1.6;
+    }
+
+    .intro{
+        font-size:16px;
+    }
+}
+</style>
 </head>
-<body><form id="form1" runat="server">
-    <asp:ScriptManager runat="server" />
 
-    <!-- Main Wrapper for Header + Login -->
-    <div style="background-color:white; max-width: 450px; width: 100%; border-style: ridge; box-shadow: 0px 0px 10px gray;">
-        
-        <!-- Header Panel -->
-        <asp:Panel ID="Panel1" runat="server" CssClass="header-panel" BackColor="#0066FF" style="border-bottom: 1px solid #ccc;">
-            <asp:Image ID="Image5" runat="server" Height="90px" ImageUrl="~/Scripts/image/logo3.png" Width="137px" />
-        </asp:Panel>
+<body>
 
-        <!-- Login Panel inside Content -->
-        <div class="content-wrapper" style="padding: 30px;">
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                <ContentTemplate>
-                    <asp:Panel ID="Panel2" runat="server" CssClass="login-panel" style="box-shadow: none; border: none;">
-                        <h3>Admin Login</h3>
+<div class="background"></div>
 
-                        <!-- Username -->
-                        <asp:Image ID="Image6" runat="server" Height="16px" ImageUrl="~/Scripts/image/download.png" Width="21px" />
-                        <asp:Label ID="Label3" runat="server" Text="Username"></asp:Label>
-                        <asp:TextBox ID="AdmintxtUn" runat="server"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
-                            ControlToValidate="AdmintxtUn" ErrorMessage="* Username is required!" ForeColor="Red"></asp:RequiredFieldValidator>
+<div class="hearts" id="hearts"></div>
 
-                        <br /><br />
+<!-- MUSIC -->
+<audio id="music" loop>
+    <source src="bithday.mp3" type="audio/mpeg">
+</audio>
 
-                        <!-- Password -->
-                        <asp:Image ID="Image7" runat="server" Height="16px" ImageUrl="~/Scripts/image/pngtree-vector-lock-icon-png-image_515444.jpg" Width="21px" />
-                        <asp:Label ID="Label2" runat="server" Text="Password"></asp:Label>
-                        <asp:TextBox ID="AdmintxtPs" runat="server" TextMode="Password"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server"
-                            ControlToValidate="AdmintxtPs" ErrorMessage="* Password is required!" ForeColor="Red"></asp:RequiredFieldValidator>
+<button class="music" onclick="toggleMusic()" id="musicBtn">
+    🔇
+</button>
 
-                        <br />
 
-                        <!-- Login Button -->
-                        <asp:Button ID="loginbt" runat="server" Text="Login" CssClass="login-button" OnClick="loginbt_Click" />
+<!-- SCREEN 1 : GIFT -->
 
-                        <!-- Login Messages -->
-                        <br />
-                        <br />
-                        <asp:Label ID="lblUsernameMsg" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label><br />
-                        <asp:Label ID="lblPasswordMsg" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label><br />
+<section class="screen" id="screen1">
 
-                        <asp:HyperLink ID="HyperLink1" runat="server" CssClass="forgot-password" NavigateUrl="~/Forgetpass.aspx">
-                            Forgot Password? Click here
-                        </asp:HyperLink>
-                    </asp:Panel>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+    <div class="content">
+
+        <div class="gift" onclick="openGift()">
+            🎁
         </div>
+
+        <div class="small-title">
+            A little surprise is waiting for you... 💕
+        </div>
+
+        <button onclick="openGift()">
+            OPEN YOUR GIFT ✨
+        </button>
+
     </div>
-</form>
+
+</section>
 
 
-    </asp:Panel>
-</form>
-</body>
-</html> 
+<!-- SCREEN 2 : HAPPY BIRTHDAY -->
 
-AdminLogin.aspx.cs
+<section class="screen hide" id="screen2">
 
-using System;
-using System.Data.SqlClient;
+    <div class="content">
 
-namespace emp_mg_system
-{
-    public partial class AdminLogin : System.Web.UI.Page
-    {
-        string connectionString = "Server=DESKTOP-RAN16E1;Database=emp_mng_system;Integrated Security=True;Encrypt=False";
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-           if (!IsPostBack)
-            {
-                lblUsernameMsg.Text = "";
-                lblPasswordMsg.Text = "";
-            }
-        }
-
-        protected void loginbt_Click(object sender, EventArgs e)
-        {
-            string username = AdmintxtUn.Text.Trim();
-            string password = AdmintxtPs.Text.Trim();
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-
-
-                string checkUsernameQuery = "SELECT COUNT(*) FROM adminLogin WHERE Username = @username";
-                using (SqlCommand cmd = new SqlCommand(checkUsernameQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    int userExists = (int)cmd.ExecuteScalar();
-
-                    if (userExists == 0)
-                    {
-                        lblUsernameMsg.Text = "❌ Invalid username! Please try again.";
-                        lblPasswordMsg.Text = ""; 
-                        return;
-                    }
-                }
-
-
-                string checkPasswordQuery = "SELECT COUNT(*) FROM adminLogin WHERE Username = @username AND Password = @password";
-                using (SqlCommand cmd = new SqlCommand(checkPasswordQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    int isValid = (int)cmd.ExecuteScalar();
-
-                    if (isValid > 0)
-                    {
-                        Session["Username"] = username;
-                        Response.Redirect("Dashboard.aspx");
-                    }
-                    else
-                    {
-                        lblPasswordMsg.Text = "🔐 Incorrect password! Please try again.";
-                        lblUsernameMsg.Text = ""; 
-                    }
-                }
-            }
-        }
-
-        
-
- 
-    }
-}
-
-Dashboard.aspx
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="emp_mng_system.Dashboard" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .header {
-            background-color: #293A4B;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-.sidebar .sidebar-button {
-    display: block;
-    background-color: #34495e;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .sidebar-button:hover {
-    background-color: #1abc9c;
-}
-
-
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        .dashboard-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .panel {
-            flex: 1;
-            min-width: 30%;
-            background-color: #ecf0f1;
-            padding: 20px;
-            text-align: center;
-            border-radius: 10px;
-            margin: 10px;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
-        <!-- Header -->
-        <div class="header">
-            Deep Ltd.
-            Company</div>
-
-        <!-- Sidebar -->
-        <!-- Sidebar -->
-<div class="sidebar">
-    <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-    <a class="sidebar-button" href="Employee.aspx" style="width: 90%">Employee</a>
-    <a class="sidebar-button" href="Department.aspx" style="width: 89%">Department</a>
-    <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-    <a class="sidebar-button" href="Leave.aspx" style="width: 89%">Leave</a>
-
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>
-    <a class="sidebar-button" href="AdminLogin.aspx" style="width: 88%">Logout</a>
-</div>
-
-
-        <!-- Main Content -->
-        <div class="content">
-            <h2>Dashboard</h2>
-
-            <div class="dashboard-panel">
-                <!-- Total Employees Panel -->
-                <div class="panel">
-                    <h3>
-                        <asp:Image ID="Image1" runat="server" Height="98px" ImageUrl="~/Scripts/image/employee.png" Width="148px" />
-                    </h3>
-                    <h3>Total Employees</h3>
-                    <asp:Label ID="lblTotalEmployees" runat="server" Text="Loading..."></asp:Label>
-                </div>
-
-                <!-- Total Departments Panel -->
-                <div class="panel">
-                    <h3>&nbsp;
-                        <asp:Image ID="Image2" runat="server" Height="98px" ImageUrl="~/Scripts/image/Dept.png" Width="148px" />
-                    </h3>
-                    <h3>Total Departments</h3>
-                    <asp:Label ID="lblTotalDepartment" runat="server" Text="Loading..."></asp:Label>
-                </div>
-
-                <!-- Leave Status Panel -->
-                <div class="panel">
-                    <h3>
-                        <asp:Image ID="Image3" runat="server" Height="105px" ImageUrl="~/Scripts/image/Levave1.png" Width="160px" />
-                    </h3>
-                    <h3>Leave Status</h3>
-                    <asp:Label ID="LabelLeaveStatus" runat="server" Text="No Leave Requests"></asp:Label>
-                </div>
-            </div>
+        <div style="font-size:45px;">
+            🎂 ✨ 💖 ✨ 🎂
         </div>
-    </form>
-</body>
-</html>
 
-Dashboard.aspx.cs
+        <div class="big-title">
+            HAPPY<br>
+            BIRTHDAY
+        </div>
 
-using System;
-using System.Data.SqlClient;
-using System.Web.UI;
+        <!-- CHANGE NAME HERE -->
+        <div class="name">
+            Bhumiii ❤️
+        </div>
 
-namespace emp_mng_system
-{
-    public partial class Dashboard : Page
-    {
-        // Database connection string
-        private readonly string connectionString = "Server=DESKTOP-RAN16E1;Database=emp_mng_system;Integrated Security=True;Encrypt=False";
+        <p class="intro">
+            Today isn't just another day...
+            it's the day someone truly special came into this world. 🥺❤️
+        </p>
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                GetEmployeeCount();
-                GetDepartmentCount();
-                GetLeaveCount();
-            }
-        }
+        <br>
 
-        private void GetEmployeeCount()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    string query = "SELECT COUNT(*) FROM Employees"; // Query to count employees
+        <button onclick="showPhotos()">
+            SEE YOUR SURPRISE 💕
+        </button>
 
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        int employeeCount = Convert.ToInt32(cmd.ExecuteScalar());
+    </div>
 
-                        // Ensure lblTotalEmployees is not null
-                        if (lblTotalEmployees != null)
-                        {
-                            lblTotalEmployees.Text = employeeCount.ToString();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error and show a friendly message
-                lblTotalEmployees.Text = "Data unavailable";
-                System.Diagnostics.Debug.WriteLine("Error in GetEmployeeCount: " + ex.Message);
-            }
-        }
-
-        private void GetDepartmentCount()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    string query = "SELECT COUNT(*) FROM Department"; // Query to count departments by DeptID
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        int departmentCount = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        // Ensure lblTotalDepartments is not null
-                        if (lblTotalDepartment != null)
-                        {
-                            lblTotalDepartment.Text = departmentCount.ToString();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error and show a friendly message
-                lblTotalDepartment.Text = "Data unavailable";
-                System.Diagnostics.Debug.WriteLine("Error in GetDepartmentCount: " + ex.Message);
-            }
-        }
-        private void GetLeaveCount()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    string query = "SELECT COUNT(*) FROM Leave"; // Query to count leaves in the Leave table
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        int leaveCount = Convert.ToInt32(cmd.ExecuteScalar());
-
-                        // Ensure lblTotalLeaves is not null
-                        if (LabelLeaveStatus != null)
-                        {
-                            LabelLeaveStatus.Text = leaveCount.ToString();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log the error and show a friendly message
-                LabelLeaveStatus.Text = "Data unavailable";
-                System.Diagnostics.Debug.WriteLine("Error in GetLeaveCount: " + ex.Message);
-            }
-        }
+</section>
 
 
-        // Navigation Button Click Events
-        protected void BtnDashboard_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
+<!-- SCREEN 3 : PHOTOS + MESSAGE -->
 
-        protected void BtnEmployee_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Employee.aspx");
-        }
+<section class="screen hide" id="screen3">
 
-        protected void BtnDepartment_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Department.aspx");
-        }
+    <div class="content">
 
-        protected void BtnSalary_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Salary.aspx");
-        }
+        <div class="photos">
 
-        protected void BtnLeave_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Leave.aspx");
-        }
+            <!-- CHANGE THESE PHOTOS -->
+            <div class="photo">
+                <img src="photo1.jpg">
+            </div>
+
+            <div class="photo">
+                <img src="photo2.jpg">
+            </div>
+
+            <div class="photo">
+                <img src="photo3.jpg">
+            </div>
+
+        </div>
+
+
+        <h2 style="font-size:30px;margin-bottom:15px;">
+            To Someone Truly Special ❤️
+        </h2>
+
+
+        <p class="message">
+
+            Happy Birthday, Bhumiii! 🎂❤️<br><br>
+
+            I honestly don't know how to put everything into words,
+            but I just want you to know that you are a really special
+            person to me. Some people simply become a beautiful part
+            of our memories, and you're one of those people. 🥺❤️
+            <br><br>
+
+            I hope this new year of your life brings you
+            endless happiness, peace, success and countless reasons
+            to smile. May you get everything you've been wishing for
+            and may every difficult day be replaced with something
+            beautiful.
+            <br><br>
+
+            Keep smiling, keep shining and always stay the amazing
+            person you are. ✨❤️
+            <br><br>
+
+            Once again...
+            <br>
+
+            <b>HAPPY BIRTHDAY! 🎂🎉❤️</b>
+
+        </p>
+
+
+        <div class="signature">
+            With lots of love ❤️
+        </div>
+
+        <button onclick="location.reload()">
+            REPLAY ✨
+        </button>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* CREATE HEARTS */
+
+const hearts = document.getElementById("hearts");
+
+const heartSymbols = ["❤️","💗","💕","💖","✨","🌸"];
+
+for(let i=0;i<45;i++){
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+
+    heart.innerHTML =
+        heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+
+    heart.style.left = Math.random()*100 + "%";
+
+    heart.style.fontSize =
+        (12 + Math.random()*20) + "px";
+
+    heart.style.animationDuration =
+        (5 + Math.random()*6) + "s";
+
+    heart.style.animationDelay =
+        Math.random()*7 + "s";
+
+    hearts.appendChild(heart);
+}
+
+
+/* OPEN GIFT */
+
+function openGift(){
+
+    document.getElementById("screen1")
+        .classList.add("hide");
+
+    setTimeout(function(){
+
+        document.getElementById("screen2")
+            .classList.remove("hide");
+
+    },600);
+
+    playMusic();
+
+}
+
+
+/* SHOW PHOTOS */
+
+function showPhotos(){
+
+    document.getElementById("screen2")
+        .classList.add("hide");
+
+    setTimeout(function(){
+
+        document.getElementById("screen3")
+            .classList.remove("hide");
+
+    },600);
+
+}
+
+
+/* MUSIC */
+
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
+
+function playMusic(){
+
+    music.play()
+    .then(()=>{
+        musicBtn.innerHTML="🔊";
+    })
+    .catch(()=>{
+        musicBtn.innerHTML="🔇";
+    });
+
+}
+
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.play();
+
+        musicBtn.innerHTML="🔊";
+
+    }else{
+
+        music.pause();
+
+        musicBtn.innerHTML="🔇";
 
     }
+
 }
 
+</script>
 
-Employees.aspx
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Employee.aspx.cs" Inherits="emp_mng_system.Employee" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Employee Management System</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background-color: #ECF0F1;
-        }
-        * { box-sizing: border-box; }
-
-               .header {
-            
-    background-color: #293A4B;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
-}
-
-        .main-container {
-            display: flex;
-            flex: 1;
-        }
-                .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-.sidebar .sidebar-button {
-    display: block;
-    background-color: #34495e;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .sidebar-button:hover {
-    background-color: #1abc9c;
-}
-
-        .content {
-            flex-grow: 1;
-            margin-left: 220px;
-            padding: 20px;
-            background-color: #ECF0F1;
-        }
-        .content h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .search-section {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .search-section input, 
-        .search-section button {
-            padding: 8px;
-            font-size: 16px;
-        }
-
-        .grid-container {
-            border: 1px solid #ccc;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-danger {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-    </style>
-</head>
-<body>
-    
-            <form id="form2" runat="server">
-        <!-- Header Panel -->
-        <div class="header">
-   Deep Ltd. Company</div>
-
-        <!-- Main -->
-        
-            <!-- Sidebar -->
-            <div class="sidebar">
-    <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-    <a class="sidebar-button" href="Employee.aspx" style="width: 90%">Employee</a>
-    <a class="sidebar-button" href="Department.aspx" style="width: 89%">Department</a>
-    <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-    <a class="sidebar-button" href="Leave.aspx" style="width: 89%">Leave</a>
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>
-    <a class="sidebar-button" href="AdminLogin.aspx" style="width: 88%">Logout</a>
-</div> &lt; div class=&quot;main-container
-
-            <!-- Content -->
-            <div class="content">
-                <h2>EMPLOYEE PANEL</h2>
-
-                <!-- Search -->
-                <div class="search-section">
-                    <asp:TextBox ID="TextBoxSearch" runat="server" Placeholder="Enter Employee ID"></asp:TextBox>
-                    <asp:Button ID="ButtonSearch" runat="server" Text="Search" CssClass="search-btn" OnClick="ButtonSearch_Click" />
-                    &nbsp;
-                    <asp:Button ID="BtnAdd" runat="server" OnClick="BtnAdd_Click" Text="Add" style="height: 44px" />
-                &nbsp;<asp:Button ID="btn_view" runat="server" OnClick="btn_view_Click" Text="View Employee List" />
-                &nbsp;</div>
-
-                <!-- GridView -->
-                <div class="grid-container">
-                    <h3>Search Result:</h3>
-                    <asp:Label ID="LabelSearchResult" runat="server" Text="Enter Employee ID to search." ForeColor="Gray"></asp:Label>
-                    <asp:GridView ID="GridView1" runat="server" Width="100%" AutoGenerateColumns="False" 
-    DataKeyNames="EmployeeID"
-    OnRowCommand="GridView1_RowCommand"
-    OnRowEditing="GridView1_RowEditing"
-    OnRowCancelingEdit="GridView1_RowCancelingEdit"
-    OnRowUpdating="GridView1_RowUpdating">
-
-    <Columns>
-        <asp:BoundField DataField="EmployeeID" HeaderText="Employee ID" ReadOnly="true" />
-        <asp:TemplateField HeaderText="First Name">
-    <ItemTemplate><%# Eval("FirstName") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtFirstName" runat="server" Text='<%# Bind("FirstName") %>' />
-        <asp:RequiredFieldValidator ID="rfvFirstName" runat="server"
-            ControlToValidate="txtFirstName"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Last Name">
-    <ItemTemplate><%# Eval("LastName") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtLastName" runat="server" Text='<%# Bind("LastName") %>' />
-        <asp:RequiredFieldValidator ID="rfvLastName" runat="server"
-            ControlToValidate="txtLastName"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Date of Birth">
-    <ItemTemplate><%# Eval("DOB", "{0:yyyy-MM-dd}") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtDOB" runat="server" Text='<%# Bind("DOB", "{0:yyyy-MM-dd}") %>' />
-        <asp:RequiredFieldValidator ID="rfvDOB" runat="server"
-            ControlToValidate="txtDOB"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-        <asp:RegularExpressionValidator ID="revDOB" runat="server"
-            ControlToValidate="txtDOB"
-            ErrorMessage="Invalid date format (yyyy-MM-dd)"
-            ValidationExpression="\d{4}-\d{2}-\d{2}" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Gender">
-    <ItemTemplate><%# Eval("Gender") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:DropDownList ID="ddlGender" runat="server">
-            <asp:ListItem Text="Select" Value="" />
-            <asp:ListItem Text="Male" Value="Male" />
-            <asp:ListItem Text="Female" Value="Female" />
-            <asp:ListItem Text="Other" Value="Other" />
-        </asp:DropDownList>
-        <asp:RequiredFieldValidator ID="rfvGender" runat="server"
-            ControlToValidate="ddlGender"
-            InitialValue=""
-            ErrorMessage="*Select gender" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Email">
-    <ItemTemplate><%# Eval("Email") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtEmail" runat="server" Text='<%# Bind("Email") %>' />
-        <asp:RequiredFieldValidator ID="rfvEmail" runat="server"
-            ControlToValidate="txtEmail"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-        <asp:RegularExpressionValidator ID="revEmail" runat="server"
-            ControlToValidate="txtEmail"
-            ErrorMessage="Invalid Email"
-            ValidationExpression="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Phone">
-    <ItemTemplate><%# Eval("Phone") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtPhone" runat="server" Text='<%# Bind("Phone") %>' />
-        <asp:RequiredFieldValidator ID="rfvPhone" runat="server"
-            ControlToValidate="txtPhone"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-        <asp:RegularExpressionValidator ID="revPhone" runat="server"
-            ControlToValidate="txtPhone"
-            ErrorMessage="10-digit number only"
-            ValidationExpression="^\d{10}$" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Department">
-    <ItemTemplate><%# Eval("Department") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:DropDownList ID="ddlDepartment" runat="server">
-            <asp:ListItem Text="Select" Value="" />
-            <asp:ListItem Text="HR" Value="HR" />
-            <asp:ListItem Text="IT" Value="IT" />
-            <asp:ListItem Text="Finance" Value="Finance" />
-            <asp:ListItem Text="Sales" Value="Sales" />
-        </asp:DropDownList>
-        <asp:RequiredFieldValidator ID="rfvDept" runat="server"
-            ControlToValidate="ddlDepartment"
-            InitialValue=""
-            ErrorMessage="*Select department" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Designation">
-    <ItemTemplate><%# Eval("Designation") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtDesignation" runat="server" Text='<%# Bind("Designation") %>' />
-        <asp:RequiredFieldValidator ID="rfvDesig" runat="server"
-            ControlToValidate="txtDesignation"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Employment Type">
-    <ItemTemplate><%# Eval("EmploymentType") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:DropDownList ID="ddlEmploymentType" runat="server">
-            <asp:ListItem Text="Select" Value="" />
-            <asp:ListItem Text="Full-Time" Value="Full-Time" />
-            <asp:ListItem Text="Part-Time" Value="Part-Time" />
-            <asp:ListItem Text="Contract" Value="Contract" />
-        </asp:DropDownList>
-        <asp:RequiredFieldValidator ID="rfvEmpType" runat="server"
-            ControlToValidate="ddlEmploymentType"
-            InitialValue=""
-            ErrorMessage="*Select type" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Date of Joining">
-    <ItemTemplate><%# Eval("DateOfJoining", "{0:yyyy-MM-dd}") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtDOJ" runat="server" Text='<%# Bind("DateOfJoining", "{0:yyyy-MM-dd}") %>' />
-        <asp:RequiredFieldValidator ID="rfvDOJ" runat="server"
-            ControlToValidate="txtDOJ"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-        <asp:RegularExpressionValidator ID="revDOJ" runat="server"
-            ControlToValidate="txtDOJ"
-            ErrorMessage="Format yyyy-MM-dd"
-            ValidationExpression="\d{4}-\d{2}-\d{2}" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-<asp:TemplateField HeaderText="Work Location">
-    <ItemTemplate><%# Eval("WorkLocation") %></ItemTemplate>
-    <EditItemTemplate>
-        <asp:TextBox ID="txtWorkLocation" runat="server" Text='<%# Bind("WorkLocation") %>' />
-        <asp:RequiredFieldValidator ID="rfvLoc" runat="server"
-            ControlToValidate="txtWorkLocation"
-            ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-    </EditItemTemplate>
-</asp:TemplateField>
-
-        <asp:CommandField ShowEditButton="True" />
-        <asp:TemplateField HeaderText="Actions">
-            <ItemTemplate>
-                <asp:Button ID="BtnRemove" runat="server" Text="Remove"
-                    CssClass="btn btn-danger btn-sm"
-                    CommandName="RemoveRow"
-                    CommandArgument='<%# Eval("EmployeeID") %>' />
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-</asp:GridView>
-
-<br />
-<asp:Button ID="BtbBack" runat="server" Text="Back" BackColor="#3399FF" OnClick="BtbBack_Click" />
-</div>
-        </div>
-    </form>
-</body>
-</html>
-
-Employee.aspx.c
-
-using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace emp_mng_system
-{
-    public partial class Employee : System.Web.UI.Page
-    {
-        private string connectionString = "Server=DESKTOP-RAN16E1;Database=emp_mng_system;Integrated Security=True;Encrypt=False";
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                GridView1.DataSource = null;
-                GridView1.DataBind();
-            }
-        }
-
-        protected void ButtonSearch_Click(object sender, EventArgs e)
-        {
-            string empId = TextBoxSearch.Text.Trim();
-
-            if (string.IsNullOrEmpty(empId))
-            {
-                LabelSearchResult.Text = "Please enter an Employee ID.";
-                LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                return;
-            }
-
-            LoadEmployeeById(empId);
-        }
-
-        private void LoadEmployeeById(string empId)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    con.Open();
-                    string query = "SELECT * FROM Employees WHERE EmployeeID = @EmpID";
-
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@EmpID", empId);
-
-                        using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                        {
-                            DataTable dt = new DataTable();
-                            da.Fill(dt);
-
-                            if (dt.Rows.Count > 0)
-                            {
-                                GridView1.DataSource = dt;
-                                GridView1.DataBind();
-                                LabelSearchResult.Text = $"Found {dt.Rows.Count} record(s) for Employee ID: {empId}";
-                                LabelSearchResult.ForeColor = System.Drawing.Color.Green;
-                            }
-                            else
-                            {
-                                GridView1.DataSource = null;
-                                GridView1.DataBind();
-                                LabelSearchResult.Text = "No employee found with the given ID.";
-                                LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LabelSearchResult.Text = "Error: " + ex.Message;
-                    LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-        }
-
-        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
-        {
-            GridView1.EditIndex = e.NewEditIndex;
-            LoadEmployeeById(TextBoxSearch.Text.Trim());
-        }
-
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-            GridView1.EditIndex = -1;
-            LoadEmployeeById(TextBoxSearch.Text.Trim());
-        }
-
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            GridViewRow row = GridView1.Rows[e.RowIndex];
-            string empId = GridView1.DataKeys[e.RowIndex].Value.ToString();
-
-            string firstName = ((TextBox)row.FindControl("txtFirstName")).Text.Trim();
-            string lastName = ((TextBox)row.FindControl("txtLastName")).Text.Trim();
-            string dob = ((TextBox)row.FindControl("txtDOB")).Text.Trim();
-            string gender = ((DropDownList)row.FindControl("ddlGender")).SelectedValue;
-            string email = ((TextBox)row.FindControl("txtEmail")).Text.Trim();
-            string phone = ((TextBox)row.FindControl("txtPhone")).Text.Trim();
-            string department = ((DropDownList)row.FindControl("ddlDepartment")).SelectedValue;
-            string designation = ((TextBox)row.FindControl("txtDesignation")).Text.Trim();
-            string employmentType = ((DropDownList)row.FindControl("ddlEmploymentType")).SelectedValue;
-            string doj = ((TextBox)row.FindControl("txtDOJ")).Text.Trim();
-            string workLocation = ((TextBox)row.FindControl("txtWorkLocation")).Text.Trim();
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    con.Open();
-                    string updateQuery = @"UPDATE Employees SET 
-                        FirstName=@FirstName, LastName=@LastName, DOB=@DOB, Gender=@Gender, Email=@Email, 
-                        Phone=@Phone, Department=@Department, Designation=@Designation, EmploymentType=@EmploymentType, 
-                        DateOfJoining=@DOJ, WorkLocation=@WorkLocation 
-                        WHERE EmployeeID=@EmpID";
-
-                    using (SqlCommand cmd = new SqlCommand(updateQuery, con))
-                    {
-                        cmd.Parameters.AddWithValue("@EmpID", empId);
-                        cmd.Parameters.AddWithValue("@FirstName", firstName);
-                        cmd.Parameters.AddWithValue("@LastName", lastName);
-                        cmd.Parameters.AddWithValue("@DOB", dob);
-                        cmd.Parameters.AddWithValue("@Gender", gender);
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        cmd.Parameters.AddWithValue("@Phone", phone);
-                        cmd.Parameters.AddWithValue("@Department", department);
-                        cmd.Parameters.AddWithValue("@Designation", designation);
-                        cmd.Parameters.AddWithValue("@EmploymentType", employmentType);
-                        cmd.Parameters.AddWithValue("@DOJ", doj);
-                        cmd.Parameters.AddWithValue("@WorkLocation", workLocation);
-
-                        cmd.ExecuteNonQuery();
-
-                        LabelSearchResult.Text = "Employee updated successfully.";
-                        LabelSearchResult.ForeColor = System.Drawing.Color.Green;
-
-                        GridView1.EditIndex = -1;
-                        LoadEmployeeById(empId);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    LabelSearchResult.Text = "Error updating employee: " + ex.Message;
-                    LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-        }
-
-        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            string empId = e.CommandArgument.ToString();
-
-            if (e.CommandName == "RemoveRow")
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    try
-                    {
-                        con.Open();
-                        string deleteQuery = "DELETE FROM Employees WHERE EmployeeID = @EmpID";
-                        using (SqlCommand cmd = new SqlCommand(deleteQuery, con))
-                        {
-                            cmd.Parameters.AddWithValue("@EmpID", empId);
-                            int rowsAffected = cmd.ExecuteNonQuery();
-
-                            if (rowsAffected > 0)
-                            {
-                                LabelSearchResult.Text = "Employee removed successfully.";
-                                LabelSearchResult.ForeColor = System.Drawing.Color.Green;
-                                GridView1.EditIndex = -1;
-                                GridView1.DataSource = null;
-                                GridView1.DataBind();
-                            }
-                            else
-                            {
-                                LabelSearchResult.Text = "Failed to remove employee.";
-                                LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        LabelSearchResult.Text = "Error: " + ex.Message;
-                        LabelSearchResult.ForeColor = System.Drawing.Color.Red;
-                    }
-                }
-            }
-        }
-
-        protected void BtnAdd_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("AddEmployee.aspx");
-        }
-
-        protected void BtnDashboard_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void BtnDepartment_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Department.aspx");
-        }
-
-        protected void BtnEmployee_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Employee.aspx");
-        }
-
-        protected void BtnSalary_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Salary.aspx");
-        }
-
-        protected void BtnLeave_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Leave.aspx");
-        }
-
-        protected void BtbBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void btn_view_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("ViewEmpList.aspx");
-
-        }
-    }
-}
-
-
-AddEmployee.aspx
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddEmployee.aspx.cs" Inherits="AddEmployee" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Add Employee - Deep Ltd. Company</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .header {
-            background-color: #293A4B;
-            color: white;
-            padding: 15px;
-            font-size: 24px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-                        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-.sidebar .sidebar-button {
-    display: block;
-    background-color: #34495e;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .sidebar-button:hover {
-    background-color: #1abc9c;
-}
-
-        .main-content {
-            margin-left: 200px;
-            padding: 80px 30px 30px 30px;
-            min-height: 100vh;
-        }
-
-        .container {
-            background-color: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .validation {
-            color: red;
-            font-size: 12px;
-        }
-
-        .button-group {
-            margin-top: 20px;
-        }
-
-        .button-group input {
-            margin-right: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .auto-style4 {
-            background-color: #00CC66;
-            color: white;
-        }
-
-        .auto-style3 {
-            background-color: red;
-            color: white;
-        }
-
-        .button-group input:hover {
-            opacity: 0.9;
-        }
-        </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="header">
-            <br />
-            Deep Ltd. Company</div>
-
-        <br />
-        <br />
-        <br />
-
-        <!-- Sidebar -->
-                    <div class="sidebar">
-    <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-    <a class="sidebar-button" href="Employee.aspx" style="width: 90%">Employee</a>
-    <a class="sidebar-button" href="Department.aspx" style="width: 89%">Department</a>
-    <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-    <a class="sidebar-button" href="Leave.aspx" style="width: 89%">Leave</a>
-                        
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>
-    <a class="sidebar-button" href="AdminLogin.aspx" style="width: 88%">Logout</a>
-</div>
-
-        <div class="main-content">
-            <div class="container">
-                <h2>Add Employee</h2>
-
-                <asp:Label ID="lblStatus" runat="server" ForeColor="Green" Font-Bold="True" />
-
-                <div class="form-group">
-                    <label>First Name:</label>
-                    <asp:TextBox ID="TxtEmpFn" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmpFn" runat="server" ErrorMessage="First Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Last Name:</label>
-                    <asp:TextBox ID="TxtEmpLn" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmpLn" runat="server" ErrorMessage="Last Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Father's Name:</label>
-                    <asp:TextBox ID="TxtFatherName" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtFatherName" runat="server" ErrorMessage="Father's Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Date of Birth:</label>
-                    <asp:TextBox ID="TxtDob" runat="server" TextMode="Date" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtDob" runat="server" ErrorMessage="Date of Birth is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Gender:</label>
-                    <asp:DropDownList ID="DropDownGender" runat="server">
-                        <asp:ListItem Text="Select Gender" Value="" />
-                        <asp:ListItem Text="Male" Value="Male" />
-                        <asp:ListItem Text="Female" Value="Female" />
-                        <asp:ListItem Text="Other" Value="Other" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownGender" InitialValue="" runat="server" ErrorMessage="Please select a gender." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Email:</label>
-                    <asp:TextBox ID="TxtEmail" runat="server" TextMode="Email" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmail" runat="server" ErrorMessage="Email is required." CssClass="validation" />
-                    <asp:RegularExpressionValidator ControlToValidate="TxtEmail" runat="server" ErrorMessage="Invalid email format." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Phone:</label>
-                    <asp:TextBox ID="TxtPhone" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtPhone" runat="server" ErrorMessage="Phone number is required." CssClass="validation" />
-                    <asp:RegularExpressionValidator ControlToValidate="TxtPhone" runat="server" ErrorMessage="Invalid phone number." ValidationExpression="^[0-9]{10}$" CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Local Address:</label>
-                    <asp:TextBox ID="TxtLocalAddress" runat="server" TextMode="MultiLine" Rows="3" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtLocalAddress" runat="server" ErrorMessage="Local Address is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Permanent Address:</label>
-                    <asp:TextBox ID="TxtPermanentAddress" runat="server" TextMode="MultiLine" Rows="3" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtPermanentAddress" runat="server" ErrorMessage="Permanent Address is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Department:</label>
-                    <asp:DropDownList ID="DropDownDepartment" runat="server">
-                        <asp:ListItem Text="Select Department" Value="" />
-                        <asp:ListItem Text="IT" Value="IT" />
-                        <asp:ListItem Text="Marketing" Value="Marketing" />
-                        <asp:ListItem Text="Finance" Value="Finance" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownDepartment" InitialValue="" runat="server" ErrorMessage="Please select a department." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Employment Type:</label>
-                    <asp:DropDownList ID="DropDownEmpType" runat="server">
-                        <asp:ListItem Text="Select Type" Value="" />
-                        <asp:ListItem Text="Full-Time" Value="Full-Time" />
-                        <asp:ListItem Text="Part-Time" Value="Part-Time" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownEmpType" InitialValue="" runat="server" ErrorMessage="Please select an employment type." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Date of Joining:</label>
-                    <asp:TextBox ID="TxtDoj" runat="server" TextMode="Date" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtDoj" runat="server" ErrorMessage="Date of Joining is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Work Location:</label>
-                    <asp:DropDownList ID="DropDownWl" runat="server">
-                        <asp:ListItem Text="Select Work Location" Value="" />
-                        <asp:ListItem Text="Noida" Value="Noida" />
-                        <asp:ListItem Text="Gurgaon" Value="Gurgaon" />
-                        <asp:ListItem Text="Bengaluru" Value="Bengaluru" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="ReqWorkLocation" ControlToValidate="DropDownWl" InitialValue="" runat="server" ErrorMessage="Please select a work location." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Employee Picture:</label>
-                    <asp:FileUpload ID="FileUploadPhoto" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="FileUploadPhoto" runat="server" ErrorMessage="Please upload a picture." CssClass="validation" />
-                </div>
-
-                <div class="button-group">
-                    <asp:Button ID="Btsave" runat="server" Text="Save Employee" CssClass="auto-style4" OnClick="Btsave_Click" />
-                                       <asp:Button ID="Btcancle" runat="server" Text="Cancel" CssClass="auto-style3" OnClick="Btcancle_Click" />
-                </div>
-
-            </div> <!-- End of container -->
-        </div> <!-- End of main-content -->
-    </form>
-</body>
-</html>
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AddEmployee.aspx.cs" Inherits="AddEmployee" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Add Employee - Deep Ltd. Company</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-        }
-
-        .header {
-            background-color: #293A4B;
-            color: white;
-            padding: 15px;
-            font-size: 24px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-                        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-.sidebar .sidebar-button {
-    display: block;
-    background-color: #34495e;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .sidebar-button:hover {
-    background-color: #1abc9c;
-}
-
-        .main-content {
-            margin-left: 200px;
-            padding: 80px 30px 30px 30px;
-            min-height: 100vh;
-        }
-
-        .container {
-            background-color: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .validation {
-            color: red;
-            font-size: 12px;
-        }
-
-        .button-group {
-            margin-top: 20px;
-        }
-
-        .button-group input {
-            margin-right: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .auto-style4 {
-            background-color: #00CC66;
-            color: white;
-        }
-
-        .auto-style3 {
-            background-color: red;
-            color: white;
-        }
-
-        .button-group input:hover {
-            opacity: 0.9;
-        }
-        </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div class="header">
-            <br />
-            Deep Ltd. Company</div>
-
-        <br />
-        <br />
-        <br />
-
-        <!-- Sidebar -->
-                    <div class="sidebar">
-    <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-    <a class="sidebar-button" href="Employee.aspx" style="width: 90%">Employee</a>
-    <a class="sidebar-button" href="Department.aspx" style="width: 89%">Department</a>
-    <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-    <a class="sidebar-button" href="Leave.aspx" style="width: 89%">Leave</a>
-                        
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>
-    <a class="sidebar-button" href="AdminLogin.aspx" style="width: 88%">Logout</a>
-</div>
-
-        <div class="main-content">
-            <div class="container">
-                <h2>Add Employee</h2>
-
-                <asp:Label ID="lblStatus" runat="server" ForeColor="Green" Font-Bold="True" />
-
-                <div class="form-group">
-                    <label>First Name:</label>
-                    <asp:TextBox ID="TxtEmpFn" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmpFn" runat="server" ErrorMessage="First Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Last Name:</label>
-                    <asp:TextBox ID="TxtEmpLn" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmpLn" runat="server" ErrorMessage="Last Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Father's Name:</label>
-                    <asp:TextBox ID="TxtFatherName" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtFatherName" runat="server" ErrorMessage="Father's Name is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Date of Birth:</label>
-                    <asp:TextBox ID="TxtDob" runat="server" TextMode="Date" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtDob" runat="server" ErrorMessage="Date of Birth is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Gender:</label>
-                    <asp:DropDownList ID="DropDownGender" runat="server">
-                        <asp:ListItem Text="Select Gender" Value="" />
-                        <asp:ListItem Text="Male" Value="Male" />
-                        <asp:ListItem Text="Female" Value="Female" />
-                        <asp:ListItem Text="Other" Value="Other" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownGender" InitialValue="" runat="server" ErrorMessage="Please select a gender." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Email:</label>
-                    <asp:TextBox ID="TxtEmail" runat="server" TextMode="Email" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtEmail" runat="server" ErrorMessage="Email is required." CssClass="validation" />
-                    <asp:RegularExpressionValidator ControlToValidate="TxtEmail" runat="server" ErrorMessage="Invalid email format." ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Phone:</label>
-                    <asp:TextBox ID="TxtPhone" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtPhone" runat="server" ErrorMessage="Phone number is required." CssClass="validation" />
-                    <asp:RegularExpressionValidator ControlToValidate="TxtPhone" runat="server" ErrorMessage="Invalid phone number." ValidationExpression="^[0-9]{10}$" CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Local Address:</label>
-                    <asp:TextBox ID="TxtLocalAddress" runat="server" TextMode="MultiLine" Rows="3" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtLocalAddress" runat="server" ErrorMessage="Local Address is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Permanent Address:</label>
-                    <asp:TextBox ID="TxtPermanentAddress" runat="server" TextMode="MultiLine" Rows="3" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtPermanentAddress" runat="server" ErrorMessage="Permanent Address is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Department:</label>
-                    <asp:DropDownList ID="DropDownDepartment" runat="server">
-                        <asp:ListItem Text="Select Department" Value="" />
-                        <asp:ListItem Text="IT" Value="IT" />
-                        <asp:ListItem Text="Marketing" Value="Marketing" />
-                        <asp:ListItem Text="Finance" Value="Finance" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownDepartment" InitialValue="" runat="server" ErrorMessage="Please select a department." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Employment Type:</label>
-                    <asp:DropDownList ID="DropDownEmpType" runat="server">
-                        <asp:ListItem Text="Select Type" Value="" />
-                        <asp:ListItem Text="Full-Time" Value="Full-Time" />
-                        <asp:ListItem Text="Part-Time" Value="Part-Time" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ControlToValidate="DropDownEmpType" InitialValue="" runat="server" ErrorMessage="Please select an employment type." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Date of Joining:</label>
-                    <asp:TextBox ID="TxtDoj" runat="server" TextMode="Date" />
-                    <asp:RequiredFieldValidator ControlToValidate="TxtDoj" runat="server" ErrorMessage="Date of Joining is required." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Work Location:</label>
-                    <asp:DropDownList ID="DropDownWl" runat="server">
-                        <asp:ListItem Text="Select Work Location" Value="" />
-                        <asp:ListItem Text="Noida" Value="Noida" />
-                        <asp:ListItem Text="Gurgaon" Value="Gurgaon" />
-                        <asp:ListItem Text="Bengaluru" Value="Bengaluru" />
-                    </asp:DropDownList>
-                    <asp:RequiredFieldValidator ID="ReqWorkLocation" ControlToValidate="DropDownWl" InitialValue="" runat="server" ErrorMessage="Please select a work location." CssClass="validation" />
-                </div>
-
-                <div class="form-group">
-                    <label>Upload Employee Picture:</label>
-                    <asp:FileUpload ID="FileUploadPhoto" runat="server" />
-                    <asp:RequiredFieldValidator ControlToValidate="FileUploadPhoto" runat="server" ErrorMessage="Please upload a picture." CssClass="validation" />
-                </div>
-
-                <div class="button-group">
-                    <asp:Button ID="Btsave" runat="server" Text="Save Employee" CssClass="auto-style4" OnClick="Btsave_Click" />
-                                       <asp:Button ID="Btcancle" runat="server" Text="Cancel" CssClass="auto-style3" OnClick="Btcancle_Click" />
-                </div>
-
-            </div> <!-- End of container -->
-        </div> <!-- End of main-content -->
-    </form>
-</body>
-</html>
-         
-AddEmployees.aspx.sc
-using System;
-using System.Web.UI;
-namespace emp_mng_system
-{
-    public partial class AddEmployee : Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-                }
-
-
-    }
-}
-
-
-Department.aspx
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Department.aspx.cs" Inherits="emp_mng_system.Department" %>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Department Management</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .auto-style4 {
-            background-color: #293A4B;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-            width: 1046px;
-        }
-
-                        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-.sidebar .sidebar-button {
-    display: block;
-    background-color: #34495e;
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.sidebar .sidebar-button:hover {
-    background-color: #1abc9c;
-}
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        .grid-container {
-            margin-top: 20px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        .gridview th, .gridview td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ccc;
-        }
-
-        .gridview th {
-            background-color: #f2f2f2;
-        }
-
-        .btn-action {
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-
-        .btn-action:hover {
-            background-color: #45a049;
-        }
-
-        .form-input {
-            padding: 5px;
-            margin: 3px;
-            width: 95%;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
-        <div class="auto-style4">Deep Ltd. Company</div>
-
-        <div class="sidebar">
-    <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-    <a class="sidebar-button" href="Employee.aspx" style="width: 90%">Employee</a>
-    <a class="sidebar-button" href="Department.aspx" style="width: 89%">Department</a>
-    <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-    <a class="sidebar-button" href="Leave.aspx" style="width: 89%">Leave</a>
-    <a class="sidebar-button" href="AdminLogin.aspx" style="width: 88%">Logout</a>
-</div>
-
-
-
-        <div class="content">
-            <h2 style="text-align: center;">Manage Departments</h2>
-            <div class="grid-container">
-                <h3 style="text-align: center; margin-bottom: 20px;">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" Width="45px" />
-                    &nbsp;
-                    <asp:Button ID="btnBack" runat="server" Text="Back" OnClick="btnBack_Click" />
-                </h3>
-
-                <asp:Label ID="LabelSearchResult" runat="server" Text="Details" ForeColor="Gray"></asp:Label>
-
-                <asp:GridView ID="GridViewDepartments" runat="server" AutoGenerateColumns="False" CssClass="gridview"
-                    DataKeyNames="DeptID"
-                    OnRowEditing="GridViewDepartments_RowEditing" 
-                    OnRowUpdating="GridViewDepartments_RowUpdating" 
-                    OnRowCancelingEdit="GridViewDepartments_RowCancelingEdit" 
-                    OnRowDeleting="GridViewDepartments_RowDeleting">
-                    <Columns>
-                        <asp:BoundField DataField="DeptName" HeaderText="Department Name" />
-                        <asp:BoundField DataField="DeptCode" HeaderText="Department Code" />
-                        <asp:BoundField DataField="DeptHead" HeaderText="Department Head" />
-                        <asp:BoundField DataField="Location" HeaderText="Location" />
-                        <asp:BoundField DataField="Phone" HeaderText="Phone" />
-                        <asp:BoundField DataField="Email" HeaderText="Email" />
-                        <asp:BoundField DataField="Description" HeaderText="Description" />
-
-                        <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
-    </form>
-</body>
-</html>
-
-Department.apx.cs
-
-using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Web.UI.WebControls;
-
-namespace emp_mng_system
-{
-    public partial class Department : System.Web.UI.Page
-    {
-        private string connectionString = "Server=DESKTOP-RAN16E1;Database=emp_mng_system;Integrated Security=True;Encrypt=False";
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                LoadDepartments();
-            }
-        }
-
-        private void LoadDepartments()
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string query = "SELECT * FROM Department";
-                SqlDataAdapter da = new SqlDataAdapter(query, con);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                GridViewDepartments.DataSource = dt;
-                GridViewDepartments.DataBind();
-            }
-        }
-
-        protected void btnAdd_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("AddDepartment.aspx");
-        }
-
-        protected void btnBack_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Dashboard.aspx");
-        }
-
-        protected void GridViewDepartments_RowEditing(object sender, System.Web.UI.WebControls.GridViewEditEventArgs e)
-        {
-            GridViewDepartments.EditIndex = e.NewEditIndex;
-            LoadDepartments();
-        }
-
-        protected void GridViewDepartments_RowCancelingEdit(object sender, System.Web.UI.WebControls.GridViewCancelEditEventArgs e)
-        {
-            GridViewDepartments.EditIndex = -1;
-            LoadDepartments();
-        }
-
-        protected void GridViewDepartments_RowUpdating(object sender, System.Web.UI.WebControls.GridViewUpdateEventArgs e)
-        {
-            GridViewRow row = GridViewDepartments.Rows[e.RowIndex];
-            int deptID = Convert.ToInt32(GridViewDepartments.DataKeys[e.RowIndex].Value);
-
-            string deptName = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditDeptName")).Value;
-            string deptCode = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditDeptCode")).Value;
-            string deptHead = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditDeptHead")).Value;
-            string location = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditLocation")).Value;
-            string phone = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditPhone")).Value;
-            string email = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditEmail")).Value;
-            string description = ((System.Web.UI.HtmlControls.HtmlInputText)row.FindControl("txtEditDescription")).Value;
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string updateQuery = @"UPDATE Department SET DeptName = @DeptName, DeptCode = @DeptCode, DeptHead = @DeptHead,
-                                    Location = @Location, Phone = @Phone, Email = @Email, Description = @Description 
-                                    WHERE DeptID = @DeptID";
-                SqlCommand cmd = new SqlCommand(updateQuery, con);
-                cmd.Parameters.AddWithValue("@DeptName", deptName);
-                cmd.Parameters.AddWithValue("@DeptCode", deptCode);
-                cmd.Parameters.AddWithValue("@DeptHead", deptHead);
-                cmd.Parameters.AddWithValue("@Location", location);
-                cmd.Parameters.AddWithValue("@Phone", phone);
-                cmd.Parameters.AddWithValue("@Email", email);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@DeptID", deptID);
-
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-
-            GridViewDepartments.EditIndex = -1;
-            LoadDepartments();
-        }
-
-        protected void GridViewDepartments_RowDeleting(object sender, System.Web.UI.WebControls.GridViewDeleteEventArgs e)
-        {
-            int deptID = Convert.ToInt32(GridViewDepartments.DataKeys[e.RowIndex].Value);
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string deleteQuery = "DELETE FROM Department WHERE DeptID = @DeptID";
-                SqlCommand cmd = new SqlCommand(deleteQuery, con);
-                cmd.Parameters.AddWithValue("@DeptID", deptID);
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-
-            LoadDepartments();
-        }
-    }
-}
-
-Salary.aspx
-
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Salary.aspx.cs" Inherits="emp_mng_system.Salary" %>
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Employee Salary Form</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .header-panel {
-            background-color: #293A4B;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            height: 60px;
-            line-height: 60px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .form-group {
-            margin: 10px 30px;
-        }
-
-        label {
-            display: inline-block;
-            width: 240px;
-            font-weight: bold;
-        }
-
-        input[type=text], input[type=number], select {
-            padding: 6px;
-            width: 250px;
-        }
-
-        .btn-group {
-            margin: 20px 30px;
-        }
-
-        .btn-group input {
-            margin-right: 15px;
-        }
-
-        .status-label {
-            font-weight: bold;
-            color: green;
-            margin: 10px 30px;
-        }
-
-        .search-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 auto 20px auto;
-            width: 85%;
-        }
-
-        .search-panel input[type=text] {
-            width: 50%;
-            padding: 8px;
-        }
-
-        .search-panel .buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sidebar .sidebar-button {
-            display: block;
-            background-color: #34495e;
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            text-align: center;
-            width: 100%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar .sidebar-button:hover {
-            background-color: #1abc9c;
-        }
-
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
-        }
-
-        .gridview-style {
-            margin: 20px 30px;
-        }
-
-        .gridview-style table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .gridview-style th, .gridview-style td {
-            padding: 8px;
-            border: 1px solid #ccc;
-            text-align: center;
-        }
-
-        .gridview-style th {
-            background-color: #293A4B;
-            color: white;
-        }
-
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <a class="sidebar-button" href="Dashboard.aspx" style="width: 94%">Dashboard</a>
-            <a class="sidebar-button" href="Employee.aspx" style="width: 89%">Employee</a>
-            <a class="sidebar-button" href="Department.aspx" style="width: 90%">Department</a>
-            <a class="sidebar-button" href="Salary.aspx">Salary</a>
-            <a class="sidebar-button" href="Leave.aspx">Leave</a>
-
-
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>            <a class="sidebar-button" href="Logout.aspx">Logout</a>
-        </div>
-
-        <div class="main-content">
-            <asp:Panel ID="Panel1" runat="server" CssClass="header-panel">Deep Ltd.</asp:Panel>
-
-            <div class="header">
-                <h2>Employee Salary Form</h2>
-            </div>
-
-            <div class="search-panel">
-                <div class="buttons">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <asp:Button ID="btnView" runat="server" Text="View All" OnClick="btnView_Click" CausesValidation="false" />
-                </div>
-            </div>
-
-            <asp:Label ID="lblStatus" runat="server" CssClass="status-label" />
-
-            <!-- Salary Input Fields -->
-            <div class="form-group">
-                <label>Employee ID:</label>
-                <asp:TextBox ID="txtEmpId" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvEmpId" runat="server" ControlToValidate="txtEmpId"
-                    ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Employee Name:</label>
-                <asp:TextBox ID="txtEmpName" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvEmpName" runat="server" ControlToValidate="txtEmpName"
-                    ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Department:</label>
-                <asp:DropDownList ID="ddldepart" runat="server">
-                    <asp:ListItem Text="Select Department" Value="" />
-                    <asp:ListItem Text="IT" />
-                    <asp:ListItem Text="Sales" />
-                    <asp:ListItem Text="HR" />
-                </asp:DropDownList>
-                <asp:RequiredFieldValidator ID="rfvDepart" runat="server" ControlToValidate="ddldepart"
-                    InitialValue="" ErrorMessage="*Select Department" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Basic Salary (Min ₹14,000):</label>
-                <asp:TextBox ID="txtBasic" runat="server" TextMode="Number" />
-                <asp:RequiredFieldValidator ID="rfvBasic" runat="server" ControlToValidate="txtBasic" ErrorMessage="*Required" ForeColor="Red" Display="Dynamic" />
-                <asp:RangeValidator ID="rvBasic" runat="server" ControlToValidate="txtBasic" MinimumValue="14000" MaximumValue="1000000" Type="Integer" ErrorMessage="*Must be ≥ ₹14,000" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Leaves:</label>
-                <asp:TextBox ID="txtLeaves" runat="server" TextMode="Number" />
-                <asp:RegularExpressionValidator ID="revLeaves" runat="server" ControlToValidate="txtLeaves"
-                    ValidationExpression="^\d{0,2}$" ErrorMessage="*Enter valid number" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>HRA:</label>
-                <asp:DropDownList ID="ddlHRA" runat="server">
-                    <asp:ListItem Text="0%" Value="0" />
-                    <asp:ListItem Text="10%" Value="10" />
-                    <asp:ListItem Text="20%" Value="20" />
-                </asp:DropDownList>
-            </div>
-
-            <div class="form-group">
-                <label>Conveyance:</label>
-                <asp:DropDownList ID="ddlConveyance" runat="server">
-                    <asp:ListItem Text="0%" Value="0" />
-                    <asp:ListItem Text="5%" Value="5" />
-                    <asp:ListItem Text="10%" Value="10" />
-                </asp:DropDownList>
-            </div>
-
-            <div class="form-group">
-                <label>Medical Allowance:</label>
-                <asp:DropDownList ID="ddlMedical" runat="server">
-                    <asp:ListItem Text="0%" Value="0" />
-                    <asp:ListItem Text="5%" Value="5" />
-                    <asp:ListItem Text="10%" Value="10" />
-                </asp:DropDownList>
-            </div>
-
-            <div class="form-group">
-                <label>Bonus:</label>
-                <asp:DropDownList ID="ddlBonus" runat="server">
-                    <asp:ListItem Text="0%" Value="0" />
-                    <asp:ListItem Text="5%" Value="5" />
-                    <asp:ListItem Text="10%" Value="10" />
-                </asp:DropDownList>
-            </div>
-
-            <div class="form-group">
-                <label>Overtime:</label>
-                <asp:TextBox ID="txtOvertime" runat="server" TextMode="Number" Placeholder="Null if not applicable" />
-                <asp:RegularExpressionValidator ID="revOvertime" runat="server" ControlToValidate="txtOvertime"
-                    ValidationExpression="^\d{0,6}$" ErrorMessage="*Enter valid amount" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Advance Deduction:</label>
-                <asp:TextBox ID="txtAdvance" runat="server" TextMode="Number" Placeholder="Null if not applicable" />
-                <asp:RegularExpressionValidator ID="revAdvance" runat="server" ControlToValidate="txtAdvance"
-                    ValidationExpression="^\d{0,6}$" ErrorMessage="*Enter valid amount" ForeColor="Red" Display="Dynamic" />
-            </div>
-
-            <div class="form-group">
-                <label>Net Salary:</label>
-                <asp:TextBox ID="txtNetSalary" runat="server" ReadOnly="true" />
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="btn-group">
-                <asp:Button ID="btnCalculate" runat="server" Text="Calculate Salary" OnClick="btnCalculate_Click" />
-                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
-                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
-            </div>
-
-            <!-- GridView for displaying salary records -->
-        </div>
-    </form>
-</body>
-</html>
-
-Salary.Aspx.cs
-using System;
-using System.Data;
-using System.Data.SqlClient;
-
-namespace emp_mng_system
-{
-    public partial class Salary : System.Web.UI.Page
-    {
-        string connectionString = "Server=DESKTOP-RAN16E1;Database=emp_mng_system;Integrated Security=True;Encrypt=False";
-
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                // Optionally, populate dropdowns for allowances, etc.
-            }
-        }
-
-        // Method to fetch employee details by EmployeeID
-        private void GetEmployeeDetails(string employeeId)
-        {
-            string query = @"
-                SELECT e.FirstName, e.LastName, d.DepartmentName 
-                FROM Employees e
-                INNER JOIN Departments d ON e.DepartmentID = d.DepartmentID
-                WHERE e.EmployeeID = @EmployeeID";
-
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
-                    try
-                    {
-                        con.Open();
-                        SqlDataReader reader = cmd.ExecuteReader();
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                // Populate the fields with the fetched data
-                                txtEmpId.Text = employeeId;
-                                txtEmpName.Text = reader["FirstName"].ToString() + " " + reader["LastName"].ToString();
-                                ddldepart.SelectedValue = reader["DepartmentName"].ToString(); // Match with ListItem text
-                            }
-                        }
-                        else
-                        {
-                            lblStatus.Text = "Employee not found.";
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        lblStatus.Text = "Error: " + ex.Message;
-                    }
-                    finally
-                    {
-                        con.Close();
-                    }
-                }
-            }
-        }
-
-        // Calculate Salary Button Click event
-        protected void btnCalculate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                decimal basicSalary = Convert.ToDecimal(txtBasic.Text);
-                decimal hra = (basicSalary * Convert.ToDecimal(ddlHRA.SelectedValue)) / 100;
-                decimal conveyance = (basicSalary * Convert.ToDecimal(ddlConveyance.SelectedValue)) / 100;
-                decimal medical = (basicSalary * Convert.ToDecimal(ddlMedical.SelectedValue)) / 100;
-                decimal bonus = (basicSalary * Convert.ToDecimal(ddlBonus.SelectedValue)) / 100;
-                decimal overtime = string.IsNullOrEmpty(txtOvertime.Text) ? 0 : Convert.ToDecimal(txtOvertime.Text);
-
-                // Optional: Leave deduction (if applicable)
-                decimal leaveDeduction = 0;
-                if (!string.IsNullOrEmpty(txtLeaves.Text))
-                {
-                    int leaves = Convert.ToInt32(txtLeaves.Text);
-                    decimal perDaySalary = basicSalary / 30;
-                    leaveDeduction = leaves * perDaySalary;
-                }
-
-                // Optional: Advance deduction
-                decimal advanceDeduction = string.IsNullOrEmpty(txtAdvance.Text) ? 0 : Convert.ToDecimal(txtAdvance.Text);
-
-                // Calculate net salary
-                decimal netSalary = basicSalary + hra + conveyance + medical + bonus + overtime - leaveDeduction - advanceDeduction;
-
-                txtNetSalary.Text = netSalary.ToString("0.00");
-            }
-            catch (Exception ex)
-            {
-                lblStatus.Text = "Error in salary calculation: " + ex.Message;
-            }
-        }
-
-        // Save Button Click event to insert salary details
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string employeeId = txtEmpId.Text;
-                decimal basicSalary = Convert.ToDecimal(txtBasic.Text);
-                decimal hra = (basicSalary * Convert.ToDecimal(ddlHRA.SelectedValue)) / 100;
-                decimal conveyance = (basicSalary * Convert.ToDecimal(ddlConveyance.SelectedValue)) / 100;
-                decimal medical = (basicSalary * Convert.ToDecimal(ddlMedical.SelectedValue)) / 100;
-                decimal bonus = (basicSalary * Convert.ToDecimal(ddlBonus.SelectedValue)) / 100;
-                decimal overtime = string.IsNullOrEmpty(txtOvertime.Text) ? 0 : Convert.ToDecimal(txtOvertime.Text);
-                decimal advanceDeduction = string.IsNullOrEmpty(txtAdvance.Text) ? 0 : Convert.ToDecimal(txtAdvance.Text);
-                decimal netSalary = Convert.ToDecimal(txtNetSalary.Text);
-
-                string query = @"
-                    INSERT INTO Salary (EmployeeID, BasicSalary, HRA, Conveyance, MedicalAllowance, Bonus, Overtime, AdvanceDeduction, NetSalary)
-                    VALUES (@EmployeeID, @BasicSalary, @HRA, @Conveyance, @MedicalAllowance, @Bonus, @Overtime, @AdvanceDeduction, @NetSalary)";
-
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(query, con))
-                    {
-                        cmd.Parameters.AddWithValue("@EmployeeID", employeeId);
-                        cmd.Parameters.AddWithValue("@BasicSalary", basicSalary);
-                        cmd.Parameters.AddWithValue("@HRA", hra);
-                        cmd.Parameters.AddWithValue("@Conveyance", conveyance);
-                        cmd.Parameters.AddWithValue("@MedicalAllowance", medical);
-                        cmd.Parameters.AddWithValue("@Bonus", bonus);
-                        cmd.Parameters.AddWithValue("@Overtime", overtime);
-                        cmd.Parameters.AddWithValue("@AdvanceDeduction", advanceDeduction);
-                        cmd.Parameters.AddWithValue("@NetSalary", netSalary);
-
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-
-                        lblStatus.Text = "Salary details saved successfully!";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                lblStatus.Text = "Error while saving salary details: " + ex.Message;
-            }
-        }
-
-        // Cancel Button Click event to clear the form
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
-        // Method to clear the form fields
-        private void ClearForm()
-        {
-            txtEmpId.Text = "";
-            txtEmpName.Text = "";
-            ddldepart.SelectedIndex = 0;
-            txtBasic.Text = "";
-            txtLeaves.Text = "";
-            txtAdvance.Text = "";
-            ddlHRA.SelectedIndex = 0;
-            ddlConveyance.SelectedIndex = 0;
-            ddlMedical.SelectedIndex = 0;
-            ddlBonus.SelectedIndex = 0;
-            txtOvertime.Text = "";
-            txtNetSalary.Text = "";
-            lblStatus.Text = "";
-        }
-
-        // View Salary List Button Click event
-        protected void btnView_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("ViewSalaryList.aspx");
-        }
-    }
-} 
-
-Leave.aspx
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Leave.aspx.cs" Inherits="emp_mng_system.Leave" %>
-   
-<!DOCTYPE html>
-<html>
-<head runat="server">
-    <title>Employee Leave Form</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .sidebar {
-            width: 200px;
-            background-color: #2C3E50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sidebar .sidebar-button {
-            display: block;
-            background-color: #34495e;
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            text-align: center;
-            width: 100%;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .sidebar .sidebar-button:hover {
-            background-color: #1abc9c;
-        }
-
-        .main-content {
-            margin-left: 240px;
-            padding: 30px;
-        }
-
-        h2 {
-            color: #2c3e50;
-        }
-
-        .form-row {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: inline-block;
-            width: 150px;
-        }
-
-        input[type="text"],
-        textarea,
-        select {
-            width: 300px;
-        }
-    
-        .header {
-            background-color: #293A4B;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <a class="sidebar-button" href="Dashboard.aspx" style="width: 90%">Dashboard</a>
-            <a class="sidebar-button" href="Employee.aspx" style="width: 91%">Employee</a>
-            <a class="sidebar-button" href="Department.aspx" style="width: 91%">Department</a>
-            <a class="sidebar-button" href="Salary.aspx" style="width: 90%">Salary</a>
-            <a class="sidebar-button" href="Leave.aspx" style="width: 90%">Leave</a>
-           
-    <a class="sidebar-button" href="Report.aspx" style="width: 88%">Report</a>
-            <a class="sidebar-button" href="Logout.aspx" style="width: 89%">Logout</a>
-        </div>
-
-        <!-- Main Content -->
-        <div class="header">
-            Deep Ltd.Company
-        </div>
-
-        <div class="main-content">
-            <h2>Employee Leave Request Form</h2>
-
-            <div class="form-row">
-                <asp:TextBox ID="txtLeaveID" runat="server" Width="200px" />
-                <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" CausesValidation="False" />
-<asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click" CausesValidation="False" />
-<asp:Button ID="btnRemove" runat="server" Text="Remove" OnClick="btnRemove_Click" CausesValidation="False" />
-<asp:Button ID="Button1" runat="server" Text="Leave Status" OnClick="btnViewStatus_Click" CausesValidation="False" />
-
-            </div>
-            <div class="form-row">
-
-                <asp:Label ID="LblMessage" runat="server" ForeColor="Green"></asp:Label>
-
-
-                </div>
-            <!-- Full Name -->
-            <div class="form-row">
-                <label>Full Name:</label>
-                <asp:TextBox ID="txtFullName" runat="server" />
-                <asp:RequiredFieldValidator ID="rfvFullName" runat="server" ControlToValidate="txtFullName" InitialValue="" ErrorMessage="Full Name is required" ForeColor="Red" />
-            </div>
-
-            <!-- Department -->
-            <div class="form-row">
-                <label>Department:</label>
-                <asp:DropDownList ID="ddlDepartment" runat="server">
-                    <asp:ListItem Text="--Select--" />
-                    <asp:ListItem Text="HR" />
-                    <asp:ListItem Text="IT" />
-                    <asp:ListItem Text="Accounts" />
-                    <asp:ListItem Text="Operations" />
-                </asp:DropDownList>
-                <asp:RequiredFieldValidator ID="rfvDepartment" runat="server" ControlToValidate="ddlDepartment" InitialValue="--Select--" ErrorMessage="Department is required" ForeColor="Red" />
-            </div>
-
-            <!-- Leave Type -->
-            <div class="form-row">
-                <label>Leave Type:</label>
-                <asp:DropDownList ID="ddlLeaveType" runat="server">
-                    <asp:ListItem Text="--Select Leave Type--" />
-                    <asp:ListItem Text="Sick Leave" />
-                    <asp:ListItem Text="Casual Leave" />
-                    <asp:ListItem Text="Earned Leave" />
-                </asp:DropDownList>
-                <asp:RequiredFieldValidator ID="rfvLeaveType" runat="server" ControlToValidate="ddlLeaveType" InitialValue="--Select Leave Type--" ErrorMessage="Leave Type is required" ForeColor="Red" />
-            </div>
-
-            <!-- From Date -->
-            <div class="form-row">
-                <label>From Date:</label>
-                <asp:TextBox ID="txtFromDate" runat="server" TextMode="Date" />
-                <asp:RequiredFieldValidator ID="rfvFromDate" runat="server" ControlToValidate="txtFromDate" ErrorMessage="From Date is required" ForeColor="Red" />
-            </div>
-
-            <!-- To Date -->
-            <div class="form-row">
-                <label>To Date:</label>
-                <asp:TextBox ID="txtToDate" runat="server" TextMode="Date" />
-                <asp:RequiredFieldValidator ID="rfvToDate" runat="server" ControlToValidate="txtToDate" ErrorMessage="To Date is required" ForeColor="Red" />
-                <asp:CompareValidator ID="cvDate" runat="server" ControlToValidate="txtToDate" Type="Date" Operator="GreaterThan" ControlToCompare="txtFromDate" ErrorMessage="To Date must be later than From Date" ForeColor="Red" />
-            </div>
-
-            <!-- Total Days (readonly, calculated later) -->
-            <div class="form-row">
-                <label>Total Days:</label>
-                <asp:TextBox ID="txtTotalDays" runat="server" ReadOnly="true" />
-            </div>
-
-            <!-- Reason -->
-            <div class="form-row">
-                <label>Reason:</label>
-                <asp:TextBox ID="txtReason" runat="server" TextMode="MultiLine" Rows="3" Columns="40" />
-                <asp:RequiredFieldValidator ID="rfvReason" runat="server" ControlToValidate="txtReason" ErrorMessage="Reason is required" ForeColor="Red" />
-            </div>
-
-            <!-- Buttons -->
-            <div class="form-row">
-                <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click" />
-                <asp:Button ID="btnCancel" runat="server" Text="Cancel" OnClick="btnCancel_Click" />
-            </div>
-        </div>
-    </form>
 </body>
 </html>
