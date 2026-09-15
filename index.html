@@ -1,11 +1,11 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Happy Birthday ❤️</title>
+<title>Happy Birthday Bhumiii ❤️</title>
 
 <style>
 *{
@@ -22,38 +22,107 @@ html,body{
 body{
     overflow:hidden;
     font-family:Georgia,serif;
-    background:#09030d;
+    background:#08020b;
     color:white;
 }
 
-/* BACKGROUND */
+/* ================= BACKGROUND ================= */
+
 .background{
     position:fixed;
     inset:0;
+    z-index:0;
+
     background:
-    radial-gradient(circle at 50% 35%,#8d286d 0%,#3a102f 35%,#100611 75%);
+        radial-gradient(circle at 50% 35%,
+        #a52b78 0%,
+        #58183f 28%,
+        #210b20 58%,
+        #08020b 100%);
+
+    animation:bgMove 10s ease-in-out infinite alternate;
 }
 
-/* FLOATING HEARTS */
+@keyframes bgMove{
+    from{
+        transform:scale(1);
+    }
+    to{
+        transform:scale(1.08);
+    }
+}
+
+/* LIGHT ORBS */
+
+.background::before,
+.background::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:.35;
+}
+
+.background::before{
+    width:300px;
+    height:300px;
+    background:#ff4fa3;
+    top:-100px;
+    left:-80px;
+    animation:orb1 8s infinite alternate;
+}
+
+.background::after{
+    width:350px;
+    height:350px;
+    background:#a600ff;
+    right:-120px;
+    bottom:-120px;
+    animation:orb2 9s infinite alternate;
+}
+
+@keyframes orb1{
+    to{
+        transform:translate(100px,120px);
+    }
+}
+
+@keyframes orb2{
+    to{
+        transform:translate(-100px,-80px);
+    }
+}
+
+/* ================= FLOATING HEARTS ================= */
+
 .hearts{
     position:fixed;
     inset:0;
     overflow:hidden;
     pointer-events:none;
-    z-index:1;
+    z-index:2;
 }
 
 .heart{
     position:absolute;
-    bottom:-50px;
-    animation:float 7s linear infinite;
-    opacity:.7;
-    font-size:20px;
+    bottom:-60px;
+
+    animation:
+        floatUp linear infinite;
+
+    opacity:0;
+    filter:drop-shadow(0 0 8px rgba(255,100,190,.7));
 }
 
-@keyframes float{
+@keyframes floatUp{
+
     0%{
-        transform:translateY(0) rotate(0);
+        transform:
+            translateY(0)
+            translateX(0)
+            rotate(0deg)
+            scale(.7);
+
         opacity:0;
     }
 
@@ -62,29 +131,69 @@ body{
     }
 
     100%{
-        transform:translateY(-110vh) rotate(360deg);
+        transform:
+            translateY(-115vh)
+            translateX(40px)
+            rotate(360deg)
+            scale(1.2);
+
         opacity:0;
     }
 }
 
-/* SCREEN */
+/* ================= SPARKLES ================= */
+
+.sparkles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:3;
+}
+
+.sparkle{
+    position:absolute;
+    color:#fff;
+    animation:twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle{
+    0%,100%{
+        opacity:.1;
+        transform:scale(.5);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.4);
+    }
+}
+
+/* ================= SCREEN ================= */
+
 .screen{
     position:fixed;
     inset:0;
+
     width:100%;
     min-height:100dvh;
 
     display:flex;
     justify-content:center;
     align-items:center;
+
     text-align:center;
 
-    padding:25px;
+    padding:30px;
 
     opacity:1;
+    visibility:visible;
+
     transform:scale(1);
 
-    transition:1s ease;
+    transition:
+        opacity .9s ease,
+        transform .9s ease,
+        visibility .9s;
 
     overflow-y:auto;
     overflow-x:hidden;
@@ -94,170 +203,382 @@ body{
 
 .screen.hide{
     opacity:0;
+    visibility:hidden;
     pointer-events:none;
-    transform:scale(1.12);
+
+    transform:scale(1.08);
 }
 
 .content{
-    position:relative;
-    z-index:5;
     width:100%;
-    max-width:1000px;
+    max-width:1100px;
     margin:auto;
+
+    position:relative;
+    z-index:6;
 }
 
-/* GIFT */
+/* ================= GIFT ================= */
+
+.gift-container{
+    position:relative;
+    display:inline-block;
+}
+
 .gift{
-    font-size:clamp(85px,12vw,130px);
+    font-size:clamp(90px,13vw,150px);
+
     cursor:pointer;
-    animation:bounce 1.5s infinite;
-    filter:drop-shadow(0 0 30px #ff4fa3);
     user-select:none;
+
+    animation:
+        giftBounce 1.6s ease-in-out infinite,
+        giftGlow 2s ease-in-out infinite alternate;
+
+    transition:.3s;
 }
 
-@keyframes bounce{
+.gift:hover{
+    transform:scale(1.12);
+}
+
+@keyframes giftBounce{
+
     0%,100%{
-        transform:translateY(0);
+        transform:translateY(0) rotate(0);
     }
 
     50%{
-        transform:translateY(-20px) rotate(-3deg);
+        transform:translateY(-22px) rotate(-4deg);
+    }
+}
+
+@keyframes giftGlow{
+
+    from{
+        filter:drop-shadow(0 0 15px #ff4fa3);
+    }
+
+    to{
+        filter:
+            drop-shadow(0 0 25px #ff4fa3)
+            drop-shadow(0 0 50px #ff4fa3);
+    }
+}
+
+.gift-ring{
+    position:absolute;
+    width:180px;
+    height:180px;
+
+    border:2px solid rgba(255,120,190,.35);
+
+    border-radius:50%;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    animation:ringPulse 2s infinite;
+    pointer-events:none;
+}
+
+@keyframes ringPulse{
+
+    0%{
+        width:140px;
+        height:140px;
+        opacity:0;
+    }
+
+    50%{
+        opacity:.8;
+    }
+
+    100%{
+        width:250px;
+        height:250px;
+        opacity:0;
     }
 }
 
 .small-title{
-    font-size:clamp(20px,3vw,28px);
-    margin:20px 0;
+    font-size:clamp(20px,3vw,30px);
+    margin:25px 0;
+
     line-height:1.4;
+
+    color:#ffe1ef;
+
+    animation:fadeUp 1.2s ease both;
 }
+
+/* ================= BUTTON ================= */
 
 button{
     border:none;
-    padding:14px 30px;
-    border-radius:30px;
 
-    background:linear-gradient(45deg,#ff3d91,#ff78ba);
+    padding:15px 32px;
+
+    border-radius:50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff3d91,
+            #ff78ba
+        );
 
     color:white;
-    font-size:16px;
+
+    font-size:15px;
     font-weight:bold;
 
     cursor:pointer;
 
-    box-shadow:0 0 25px rgba(255,80,170,.6);
+    box-shadow:
+        0 0 20px rgba(255,80,170,.5),
+        0 8px 30px rgba(0,0,0,.3);
 
-    transition:.25s ease;
+    transition:.3s;
+
+    letter-spacing:.5px;
 }
 
 button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 35px rgba(255,80,170,.9);
+    transform:translateY(-3px) scale(1.04);
+
+    box-shadow:
+        0 0 30px rgba(255,80,170,.9),
+        0 10px 35px rgba(0,0,0,.4);
 }
 
 button:active{
     transform:scale(.95);
 }
 
-/* BIRTHDAY */
-.big-title{
-    font-size:clamp(50px,11vw,120px);
-    line-height:.95;
+/* ================= BIRTHDAY ================= */
 
-    color:#ffd2e9;
+.cake{
+    font-size:clamp(35px,5vw,55px);
+
+    margin-bottom:12px;
+
+    animation:
+        cakeFloat 2s ease-in-out infinite;
+}
+
+@keyframes cakeFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.big-title{
+    font-size:clamp(55px,12vw,130px);
+
+    line-height:.9;
+
+    font-weight:bold;
+
+    color:#ffd7ea;
 
     text-shadow:
         0 0 10px #ff4b9d,
-        0 0 35px #ff4b9d,
-        0 0 70px #ff4b9d;
+        0 0 30px #ff4b9d,
+        0 0 60px #ff4b9d;
 
-    animation:glow 2s infinite alternate;
+    animation:
+        titleReveal 1.3s ease,
+        glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleReveal{
+
+    from{
+        opacity:0;
+        transform:scale(.5) translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1) translateY(0);
+    }
 }
 
 @keyframes glow{
+
     from{
-        text-shadow:0 0 15px #ff4b9d;
+        text-shadow:
+            0 0 10px #ff4b9d,
+            0 0 25px #ff4b9d;
     }
 
     to{
         text-shadow:
-        0 0 20px #ff4b9d,
-        0 0 60px #ff4b9d;
+            0 0 20px #ff4b9d,
+            0 0 50px #ff4b9d,
+            0 0 80px #ff4b9d;
     }
 }
 
 .name{
-    font-size:clamp(28px,6vw,55px);
-    margin:25px 0;
+    font-size:clamp(30px,6vw,60px);
+
+    margin:25px 0 18px;
+
     color:#fff;
+
+    text-shadow:
+        0 0 15px rgba(255,255,255,.4);
+
+    animation:
+        fadeUp 1.4s .3s both;
 }
 
 .intro{
     font-family:Arial,sans-serif;
-    font-size:clamp(15px,2vw,18px);
+
+    font-size:clamp(15px,2vw,19px);
+
     line-height:1.7;
 
-    color:#ffe3ef;
+    color:#ffe5f0;
 
-    max-width:650px;
+    max-width:700px;
+
     margin:auto;
+
+    animation:
+        fadeUp 1.4s .5s both;
 }
 
-/* PHOTOS */
+/* ================= PHOTOS ================= */
+
+.photo-heading{
+    font-size:clamp(24px,4vw,36px);
+
+    margin-bottom:22px;
+
+    color:#ffe4ef;
+
+    animation:fadeUp .8s ease both;
+}
+
 .photos{
     display:flex;
+
     justify-content:center;
     align-items:center;
 
-    gap:18px;
-    flex-wrap:wrap;
+    gap:28px;
 
-    margin-bottom:25px;
+    margin:0 auto 28px;
+
+    flex-wrap:wrap;
 }
 
 .photo{
-    width:190px;
-    height:240px;
+    position:relative;
 
-    padding:5px;
+    width:230px;
+    height:290px;
 
-    background:#fff;
+    padding:7px;
 
-    border-radius:18px;
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #ffe9f3,
+            #fff
+        );
+
+    border-radius:22px;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.5),
-        0 0 25px rgba(255,100,180,.35);
+        0 20px 45px rgba(0,0,0,.55),
+        0 0 30px rgba(255,100,180,.3);
 
-    animation:photoIn 1.2s ease both;
+    opacity:0;
 
-    flex-shrink:0;
+    overflow:hidden;
+
+    animation:
+        photoReveal 1s ease forwards;
 }
 
-.photo:nth-child(2){
-    transform:translateY(-15px) rotate(2deg);
-    animation-delay:.2s;
-}
+.photo::before{
+    content:"";
 
-.photo:nth-child(3){
-    transform:rotate(-2deg);
-    animation-delay:.4s;
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent 35%,
+            rgba(255,255,255,.7) 50%,
+            transparent 65%
+        );
+
+    transform:translateX(-120%);
+
+    animation:shine 3s 1.2s infinite;
 }
 
 .photo img{
     width:100%;
     height:100%;
 
+    display:block;
+
     object-fit:cover;
 
-    border-radius:14px;
+    border-radius:17px;
 
-    display:block;
+    transition:
+        transform .7s ease,
+        filter .7s ease;
 }
 
-@keyframes photoIn{
+.photo:hover img{
+    transform:scale(1.08);
+
+    filter:brightness(1.08);
+}
+
+.photo:nth-child(1){
+    transform:rotate(-5deg) translateY(20px);
+    animation-delay:.1s;
+}
+
+.photo:nth-child(2){
+    transform:rotate(2deg) translateY(-15px);
+    animation-delay:.35s;
+    z-index:2;
+}
+
+.photo:nth-child(3){
+    transform:rotate(5deg) translateY(20px);
+    animation-delay:.6s;
+}
+
+@keyframes photoReveal{
+
     from{
         opacity:0;
-        transform:scale(.5) rotate(-10deg);
+        transform:
+            translateY(80px)
+            scale(.7)
+            rotate(0deg);
     }
 
     to{
@@ -265,59 +586,152 @@ button:active{
     }
 }
 
-/* MESSAGE */
+@keyframes shine{
+
+    0%{
+        transform:translateX(-120%);
+    }
+
+    35%,100%{
+        transform:translateX(120%);
+    }
+}
+
+/* ================= MESSAGE ================= */
+
+.message-box{
+    max-width:780px;
+
+    margin:0 auto;
+
+    padding:25px 30px;
+
+    border-radius:25px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.3),
+        inset 0 0 30px rgba(255,100,180,.05);
+
+    backdrop-filter:blur(10px);
+
+    animation:
+        messageReveal 1.2s .7s both;
+}
+
+@keyframes messageReveal{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(40px)
+            scale(.96);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
 .message{
     font-family:Arial,sans-serif;
 
     font-size:17px;
+
     line-height:1.8;
 
-    color:#ffe5f0;
-
-    max-width:750px;
-
-    margin:0 auto 20px;
+    color:#ffe8f1;
 }
 
 .signature{
-    font-size:24px;
+    font-size:25px;
+
     color:#ffb9d9;
+
     margin:20px;
+
+    animation:
+        pulse 2s infinite;
 }
 
-/* MUSIC BUTTON */
-.music{
+@keyframes pulse{
+
+    0%,100%{
+        opacity:.7;
+    }
+
+    50%{
+        opacity:1;
+        text-shadow:0 0 20px #ff69aa;
+    }
+}
+
+/* ================= CONFETTI ================= */
+
+.confetti{
     position:fixed;
 
-    top:20px;
-    right:20px;
+    top:-20px;
 
-    z-index:20;
+    width:8px;
+    height:14px;
 
-    width:48px;
-    height:48px;
+    z-index:10;
 
-    padding:0;
+    pointer-events:none;
 
-    border-radius:50%;
-
-    font-size:20px;
+    animation:confettiFall linear forwards;
 }
 
-/* DESKTOP / WINDOWS */
+@keyframes confettiFall{
+
+    to{
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+
+        opacity:0;
+    }
+}
+
+/* ================= GENERAL ANIMATION ================= */
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ================= DESKTOP ================= */
+
 @media(min-width:1000px){
 
     .screen{
-        padding:40px;
+        padding:45px;
     }
 
     .content{
-        max-width:1100px;
+        max-width:1150px;
     }
 
     .photo{
-        width:210px;
-        height:270px;
+        width:240px;
+        height:310px;
     }
 
     .message{
@@ -325,38 +739,51 @@ button:active{
     }
 }
 
-/* TABLET */
+/* ================= TABLET ================= */
+
 @media(max-width:900px){
 
-    .photo{
-        width:160px;
-        height:210px;
+    .photos{
+        gap:18px;
     }
 
-    .photos{
-        gap:12px;
+    .photo{
+        width:180px;
+        height:235px;
     }
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
+
 @media(max-width:600px){
 
     .screen{
-        padding:20px 15px;
+        padding:
+            25px
+            14px;
     }
 
     .gift{
         font-size:90px;
     }
 
+    .gift-ring{
+        width:130px;
+        height:130px;
+    }
+
     .small-title{
-        font-size:21px;
-        margin:15px 0 20px;
+        font-size:20px;
+        margin:18px 0;
     }
 
     button{
-        padding:13px 23px;
-        font-size:14px;
+        padding:13px 24px;
+        font-size:13px;
+    }
+
+    .cake{
+        font-size:35px;
     }
 
     .big-title{
@@ -364,55 +791,71 @@ button:active{
     }
 
     .name{
-        font-size:32px;
-        margin:20px 0;
+        font-size:31px;
+        margin:20px 0 15px;
     }
 
     .intro{
         font-size:15px;
         line-height:1.6;
+        padding:0 5px;
     }
 
     .photos{
-        gap:7px;
-        margin-bottom:18px;
+        gap:9px;
+        margin-bottom:20px;
     }
 
     .photo{
         width:29vw;
-        max-width:115px;
-        height:145px;
+        max-width:125px;
+
+        height:165px;
+
         padding:4px;
-        border-radius:13px;
+
+        border-radius:15px;
     }
 
     .photo img{
-        border-radius:10px;
+        border-radius:11px;
+    }
+
+    .photo:nth-child(1){
+        transform:rotate(-4deg);
+    }
+
+    .photo:nth-child(2){
+        transform:translateY(-8px) rotate(2deg);
+    }
+
+    .photo:nth-child(3){
+        transform:rotate(4deg);
+    }
+
+    .photo-heading{
+        font-size:24px;
+        margin-bottom:18px;
+    }
+
+    .message-box{
+        padding:18px 15px;
+        border-radius:18px;
     }
 
     .message{
         font-size:14px;
-        line-height:1.55;
-        max-width:95%;
+        line-height:1.6;
     }
 
     .signature{
         font-size:20px;
         margin:15px;
     }
-
-    .music{
-        top:12px;
-        right:12px;
-
-        width:42px;
-        height:42px;
-
-        font-size:18px;
-    }
 }
 
-/* VERY SMALL PHONES */
+/* ================= VERY SMALL MOBILE ================= */
+
 @media(max-width:380px){
 
     .gift{
@@ -420,7 +863,7 @@ button:active{
     }
 
     .big-title{
-        font-size:44px;
+        font-size:45px;
     }
 
     .name{
@@ -429,7 +872,7 @@ button:active{
 
     .photo{
         width:28vw;
-        height:125px;
+        height:140px;
     }
 
     .message{
@@ -441,33 +884,39 @@ button:active{
 
 <body>
 
+<!-- BACKGROUND -->
 <div class="background"></div>
 
+<!-- FLOATING HEARTS -->
 <div class="hearts" id="hearts"></div>
 
+<!-- SPARKLES -->
+<div class="sparkles" id="sparkles"></div>
 
-<!-- MUSIC -->
 
-<audio id="music" loop preload="auto">
-    <source src="./audio-birthday.mp3" type="audio/mpeg">
+<!-- ================= MUSIC ================= -->
+
+<audio id="music" autoplay loop preload="auto">
+    <source src="birthday.mp3" type="audio/mpeg">
 </audio>
-<button
-    class="music"
-    onclick="toggleMusic()"
-    id="musicBtn"
-    aria-label="Toggle music">
-    🔇
-</button>
 
 
-<!-- SCREEN 1 : GIFT -->
+<!-- ================= SCREEN 1 ================= -->
 
 <section class="screen" id="screen1">
 
     <div class="content">
 
-        <div class="gift" onclick="openGift()">
-            🎁
+        <div class="gift-container">
+
+            <div class="gift-ring"></div>
+
+            <div
+                class="gift"
+                onclick="openGift()">
+                🎁
+            </div>
+
         </div>
 
         <div class="small-title">
@@ -483,13 +932,13 @@ button:active{
 </section>
 
 
-<!-- SCREEN 2 : HAPPY BIRTHDAY -->
+<!-- ================= SCREEN 2 ================= -->
 
 <section class="screen hide" id="screen2">
 
     <div class="content">
 
-        <div style="font-size:45px;">
+        <div class="cake">
             🎂 ✨ 💖 ✨ 🎂
         </div>
 
@@ -518,66 +967,80 @@ button:active{
 </section>
 
 
-
+<!-- ================= SCREEN 3 ================= -->
 
 <section class="screen hide" id="screen3">
 
     <div class="content">
 
-       <div class="photos">
+        <div class="photo-heading">
+            Some Beautiful Memories ❤️
+        </div>
 
-    <div class="photo">
-        <img src="./Photo1.jpg" alt="Memory 1">
-    </div>
+        <div class="photos">
 
-    <div class="photo">
-        <img src="./Photo2.jpg" alt="Memory 2">
-    </div>
+            <div class="photo">
+                <img
+                    src="Photo1.jpg"
+                    alt="Memory 1">
+            </div>
 
-    <div class="photo">
-        <img src="./Photo3.jpg" alt="Memory 3">
-    </div>
+            <div class="photo">
+                <img
+                    src="Photo2.jpg"
+                    alt="Memory 2">
+            </div>
 
-</div>
+            <div class="photo">
+                <img
+                    src="Photo3.jpg"
+                    alt="Memory 3">
+            </div>
+
         </div>
 
 
-        <h2 style="font-size:30px;margin-bottom:15px;">
-            To Someone Truly Special ❤️
-        </h2>
+        <div class="message-box">
 
+            <p class="message">
 
-        <p class="message">
+                Happy Birthday, Bhumiii! 🎂❤️
+                <br><br>
 
-            Happy Birthday, Bhumiii! 🎂❤️<br><br>
+                I honestly don't know how to put everything
+                into words, but I just want you to know that
+                you are a really special person to me.
+                Some people simply become a beautiful part
+                of our memories, and you're one of those people. 🥺❤️
 
-            I honestly don't know how to put everything into words,
-            but I just want you to know that you are a really special
-            person to me. Some people simply become a beautiful part
-            of our memories, and you're one of those people. 🥺❤️
+                <br><br>
 
-            <br><br>
+                I hope this new year of your life brings you
+                endless happiness, peace, success and countless
+                reasons to smile.
 
-            I hope this new year of your life brings you
-            endless happiness, peace, success and countless reasons
-            to smile. May you get everything you've been wishing for
-            and may every difficult day be replaced with something
-            beautiful.
+                May you get everything you've been wishing for
+                and may every difficult day be replaced with
+                something beautiful.
 
-            <br><br>
+                <br><br>
 
-            Keep smiling, keep shining and always stay the amazing
-            person you are. ✨❤️
+                Keep smiling, keep shining and always stay
+                the amazing person you are. ✨❤️
 
-            <br><br>
+                <br><br>
 
-            Once again...
+                Once again...
 
-            <br>
+                <br><br>
 
-            <b>HAPPY BIRTHDAY! 🎂🎉❤️</b>
+                <b>
+                    HAPPY BIRTHDAY! 🎂🎉❤️
+                </b>
 
-        </p>
+            </p>
+
+        </div>
 
 
         <div class="signature">
@@ -595,9 +1058,10 @@ button:active{
 
 <script>
 
-/* CREATE FLOATING HEARTS */
+/* ================= HEARTS ================= */
 
-const hearts = document.getElementById("hearts");
+const hearts =
+    document.getElementById("hearts");
 
 const heartSymbols = [
     "❤️",
@@ -608,15 +1072,19 @@ const heartSymbols = [
     "🌸"
 ];
 
-for(let i = 0; i < 45; i++){
+for(let i = 0; i < 50; i++){
 
-    const heart = document.createElement("div");
+    const heart =
+        document.createElement("div");
 
     heart.className = "heart";
 
     heart.innerHTML =
         heartSymbols[
-            Math.floor(Math.random() * heartSymbols.length)
+            Math.floor(
+                Math.random() *
+                heartSymbols.length
+            )
         ];
 
     heart.style.left =
@@ -626,18 +1094,104 @@ for(let i = 0; i < 45; i++){
         (12 + Math.random() * 20) + "px";
 
     heart.style.animationDuration =
-        (5 + Math.random() * 6) + "s";
+        (5 + Math.random() * 7) + "s";
 
     heart.style.animationDelay =
-        Math.random() * 7 + "s";
+        Math.random() * 8 + "s";
 
     hearts.appendChild(heart);
 }
 
 
-/* OPEN GIFT */
+/* ================= SPARKLES ================= */
+
+const sparkles =
+    document.getElementById("sparkles");
+
+for(let i = 0; i < 35; i++){
+
+    const sparkle =
+        document.createElement("div");
+
+    sparkle.className = "sparkle";
+
+    sparkle.innerHTML = "✦";
+
+    sparkle.style.left =
+        Math.random() * 100 + "%";
+
+    sparkle.style.top =
+        Math.random() * 100 + "%";
+
+    sparkle.style.fontSize =
+        (8 + Math.random() * 14) + "px";
+
+    sparkle.style.animationDelay =
+        Math.random() * 3 + "s";
+
+    sparkles.appendChild(sparkle);
+}
+
+
+/* ================= MUSIC ================= */
+
+const music =
+    document.getElementById("music");
+
+
+/*
+   Try autoplay immediately.
+   Browsers may block sound autoplay.
+*/
+
+window.addEventListener("load", function(){
+
+    music.volume = 0.85;
+
+    music.play().catch(function(){
+
+        /*
+          Browser blocked autoplay.
+          It will start on the first user interaction.
+        */
+
+    });
+
+});
+
+
+/*
+   Start music on ANY first interaction
+   if autoplay was blocked.
+*/
+
+document.addEventListener(
+    "click",
+    function startMusic(){
+
+        if(music.paused){
+
+            music.play().catch(function(){});
+
+        }
+
+        document.removeEventListener(
+            "click",
+            startMusic
+        );
+
+    },
+    {once:true}
+);
+
+
+/* ================= OPEN GIFT ================= */
 
 function openGift(){
+
+    music.play().catch(function(){});
+
+    createConfetti();
 
     document
         .getElementById("screen1")
@@ -649,15 +1203,15 @@ function openGift(){
             .getElementById("screen2")
             .classList.remove("hide");
 
-    },600);
-
-    playMusic();
+    },700);
 }
 
 
-/* SHOW PHOTOS */
+/* ================= SHOW PHOTOS ================= */
 
 function showPhotos(){
+
+    createConfetti();
 
     document
         .getElementById("screen2")
@@ -669,56 +1223,58 @@ function showPhotos(){
             .getElementById("screen3")
             .classList.remove("hide");
 
-    },600);
-
+    },700);
 }
 
 
-/* MUSIC */
+/* ================= CONFETTI ================= */
 
-const music =
-    document.getElementById("music");
+function createConfetti(){
 
-const musicBtn =
-    document.getElementById("musicBtn");
+    const symbols = [
+        "💖",
+        "💕",
+        "✨",
+        "🌸",
+        "🎉",
+        "💗"
+    ];
 
+    for(let i = 0; i < 35; i++){
 
-function playMusic(){
+        const piece =
+            document.createElement("div");
 
-    music.play()
-    .then(() => {
+        piece.className = "confetti";
 
-        musicBtn.innerHTML = "🔊";
+        piece.innerHTML =
+            symbols[
+                Math.floor(
+                    Math.random() *
+                    symbols.length
+                )
+            ];
 
-    })
-    .catch(() => {
+        piece.style.left =
+            Math.random() * 100 + "%";
 
-        musicBtn.innerHTML = "🔇";
+        piece.style.fontSize =
+            (10 + Math.random() * 14) + "px";
 
-    });
+        piece.style.animationDuration =
+            (2 + Math.random() * 3) + "s";
 
-}
+        piece.style.animationDelay =
+            Math.random() * .8 + "s";
 
+        document.body.appendChild(piece);
 
-function toggleMusic(){
+        setTimeout(function(){
 
-    if(music.paused){
+            piece.remove();
 
-        music.play()
-        .then(() => {
-
-            musicBtn.innerHTML = "🔊";
-
-        });
-
-    }else{
-
-        music.pause();
-
-        musicBtn.innerHTML = "🔇";
-
+        },5000);
     }
-
 }
 
 </script>
